@@ -1,18 +1,20 @@
 @extends('partials.dashboard.master')
 @push('styles')
-    <link href="{{ asset('dashboard-assets/css/datatables' . ( isDarkMode() ?  '.dark' : '' ) .'.bundle.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('dashboard-assets/css/datatables' . (isDarkMode() ? '.dark' : '') . '.bundle.css') }}"
+        rel="stylesheet" type="text/css" />
 @endpush
 @section('content')
-
     <!-- begin :: Subheader -->
     <div class="toolbar">
 
-        <div  class="container-fluid d-flex flex-stack">
+        <div class="container-fluid d-flex flex-stack">
 
-            <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+            <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
+                data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
+                class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
 
                 <!-- begin :: Title -->
-                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">{{ __("ContactUs us") }}</h1>
+                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">{{ __('ContactUs us') }}</h1>
                 <!-- end   :: Title -->
 
                 <!-- begin :: Separator -->
@@ -23,7 +25,7 @@
                 <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
                     <!-- begin :: Item -->
                     <li class="breadcrumb-item text-muted">
-                        {{ __("Messages") }}
+                        {{ __('Messages') }}
                     </li>
                     <!-- end   :: Item -->
                 </ul>
@@ -47,11 +49,12 @@
                 <!-- begin :: General Search -->
                 <div class="d-flex align-items-center position-relative my-1 mb-2 mb-md-0">
 
-                        <span class="svg-icon svg-icon-1 position-absolute ms-6">
-                               <i class="fa fa-search fa-lg" ></i>
-                        </span>
+                    <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                        <i class="fa fa-search fa-lg"></i>
+                    </span>
 
-                    <input type="text" class="form-control form-control-solid w-250px ps-15 border-gray-300 border-1" id="general-search-inp" placeholder="{{ __("Search ...") }}">
+                    <input type="text" class="form-control form-control-solid w-250px ps-15 border-gray-300 border-1"
+                        id="general-search-inp" placeholder="{{ __('Search ...') }}">
 
                 </div>
                 <!-- end   :: General Search -->
@@ -65,15 +68,15 @@
             <table data-ordering="false" id="kt_datatable" class="table text-center table-row-dashed fs-6 gy-5">
 
                 <thead>
-                <tr class="text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                    <th>#</th>
-                    <th>{{ __("name") }}</th>
-                    <th>{{ __("email") }}</th>
-                    <th>{{ __("Message title") }}</th>
-                    <th>{{ __("message") }}</th>
-                    <th>{{ __("reply") }}</th>
-                    <th class="min-w-100px">{{ __("actions") }}</th>
-                </tr>
+                    <tr class="text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                        <th>#</th>
+                        <th>{{ __('name') }}</th>
+                        <th>{{ __('email') }}</th>
+                        <th>{{ __('phone') }}</th>
+                        <th>{{ __('message') }}</th>
+                        <th>{{ __('reply') }}</th>
+                        <th class="min-w-100px">{{ __('actions') }}</th>
+                    </tr>
                 </thead>
 
                 <tbody class="text-gray-600 fw-bold text-center">
@@ -87,7 +90,6 @@
         <!-- end   :: Card Body -->
     </div>
     <!-- end   :: Datatable card -->
-
 @endsection
 @push('scripts')
     <script src="{{ asset('js/dashboard/datatables/datatables.bundle.js') }}"></script>

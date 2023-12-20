@@ -33,7 +33,7 @@ let KTDatatable = function () {
                 {data: 'id'},
                 {data: 'name'},
                 {data: 'email'},
-                {data: 'title'},
+                {data: 'phone'},
                 {data: 'message'},
                 {data: 'reply'},
                 {data: null},

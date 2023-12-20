@@ -5,10 +5,16 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Car;
+use App\Models\CarImage;
 use App\Models\CarModel;
+use App\Models\Category;
+use App\Models\City;
 use App\Models\Color;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Storage;
+
+use function App\Http\Controllers\store;
 
 class CarController extends Controller
 {
@@ -28,12 +34,12 @@ class CarController extends Controller
     public function create()
     {
         $this->authorize('create_cars');
-
+        $models = CarModel::select('id','name_' . getLocale())->get();
         $brands = Brand::select('id','name_' . getLocale())->get();
+        $cities = City::select('id','name_' . getLocale())->get();
+        $categories=Category::select('id','name_' . getLocale())->get();
         $colors = Color::select('id','image','name_' . getLocale(),'hex_code')->get();
-        $tags   = Tag::select('id','name_' . getLocale() )->get();
-
-        return view('dashboard.cars.create',compact('brands','colors','tags'));
+        return view('dashboard.cars.create',compact('brands','colors','models','cities','categories'));
     }
 
     public function edit(Car $car)
@@ -41,310 +47,120 @@ class CarController extends Controller
         $this->authorize('update_cars');
 
         $car->load('colors');
+        $models = CarModel::select('id','name_' . getLocale())->get();
+        $brands = Brand::select('id','name_' . getLocale())->get();
+        $cities = City::select('id','name_' . getLocale())->get();
+        $categories=Category::select('id','name_' . getLocale())->get();
+        $colors = Color::select('id','image','name_' . getLocale(),'hex_code')->get();
+        $relatedImages = $car->images;
+         
 
-        $brands  = Brand::select('id','name_' . getLocale())->get();
-        $colors  = Color::select('id','image','name_' . getLocale(),'hex_code')->get();
-        $tags    = Tag::select('id','name_' . getLocale() )->get();
-
-        return view('dashboard.cars.edit',compact('brands','colors','car','tags'));
+         return view('dashboard.cars.edit',compact('brands','colors','car','models','cities','categories','relatedImages'));
     }
 
     public function validateStep( Request $request , Car $car = null)
     {
-
-        if ($request['step'] == 1) {
-
-            $discountPrice = $request['discount_price'] ?? 0;
+               $discountPrice = $request['discount_price'] ?? 0;
             $price         = $request['price'] ?? 0;
-
+            $status= $request['status']?? 1;
             $request->validate([
                 'brand_id' => ['required'],
                 'model_id' => ['required'],
-                'sub_model_id' => ['required'],
+                'category_id' => ['required'],
+                'name_ar' => ['required' , 'string','max:255'],
+                'name_en' => ['required' , 'string','max:255'],
                 'year' => ['required'],
-                'card_description_ar' => ['required' , 'string','max:255'],
-                'card_description_en' => ['required' , 'string','max:255'],
-                'description_ar' => ['required' , 'string'],
-                'description_en' => ['required' , 'string'],
+                'fuel_type' => ['required'],
+                'publish' => ['required'],
+                'gear_shifter' => ['required'],
                 'video_url' => ['nullable' , 'string','url'],
                 'price' => 'required | numeric|lte:2147483647|not_in:0|gt:' . $discountPrice,
                 'discount_price' => 'required_with:have_discount|nullable|numeric|not_in:0|lt:' . $price,
-                'price_field_status' => ['required' , 'string'],
-                'tax_on_exhibition' => ['required'],
-                'tax' => ['required'],
-                'low_price' => ['required'],
                 'supplier' => ['required','in:gulf,saudi'],
-                'status' => ['required'],
+                'status' => 'required'. $status,
                 'is_new' => ['required'],
-                'other_text_ar' => ['required_if:price_field_status,other','nullable','string','max:255'],
-                'other_text_en' => ['required_if:price_field_status,other','nullable','string','max:255'],
                 'show_in_home_page' => ['required', 'in:0,1'],
                 'kilometers' => ['required_if:is_new,0', 'numeric', 'nullable', 'min:1'],
-            ]);
+                'color_id'=>['required'],
+                'city_id'=>['required'],
+                // 'car_Images'    => ['required','array','min:2','max:5'],
+                // 'car_Images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust allowed image types and size as needed
 
-        }elseif ($request['step'] == 2) {
-
-            $request->validate([
-                'main_image'  => [ $car ? 'nullable' : 'required' , 'image'],
-                'cover_image' => [ $car ? 'nullable' : 'required' , 'image'],
-                'share_image' => ['nullable' , 'image'],
-                'colors'      => ['required','array','min:1'],
-                'colors.*.inner_images' => $car ? 'nullable' : 'required',
-                'colors.*.outer_images' => $car ? 'nullable' : 'required',
-                'colors.*.inner_images.*' => 'image',
-                'colors.*.outer_images.*' => 'image',
-            ]);
-
-        }elseif ($request['step'] == 3) {
-
-            $request->validate([
-                'meta_keywords_ar'   => 'nullable|string|max:255' ,
-                'meta_keywords_en'   => 'nullable|string|max:255' ,
-                'meta_desc_ar'       => 'nullable|string|max:255' ,
-                'meta_desc_en'       => 'nullable|string|max:255' ,
-                'engine_measurement' => 'required|string|max:255' ,
-                'engine_type'        => 'required|string|max:255' ,
-                'valves'             => 'required|string|max:255' ,
-                'maximum_force'      => 'required|string|max:255' ,
-                'determination'      => 'required|string|max:255' ,
-                'fuel_consumption'   => 'required|string|max:255' ,
-                'wheels'             => 'required|string|max:255' ,
-                'fuel_tank_capacity' => 'required|string|max:255' ,
-                'driving_mode'       => 'required|array|min:1' ,
-                'speakers_number'    => 'required|integer' ,
-                'seats_number'       => 'required|integer' ,
-                'car_style'          => 'required|string' ,
-                'traction_type'      => 'required|string' ,
-                'Motion_vector'      => 'required|string' ,
-                'turbo'              => 'required|string' ,
-                'engine_system'      => 'required|string' ,
-                'steering_wheel'     => 'required|string' ,
-                'eco_boost'          => 'required|string' ,
-                'wheel_shifters'     => 'required|string'
-            ]);
-
-        }elseif ($request['step'] == 4) {
-
-            $request->validate([
-                'bright_lights_during_the_day'  => 'required|string|max:255' ,
-                'fog_lights'                    => 'required|string|max:255' ,
-                'headlights'                    => 'required|string|max:255' ,
-                'upholstered_seats'             => 'required|string|max:255' ,
-                'driver_seat_adjustment'        => 'required|string|max:255' ,
-                'passenger_seat_movement'       => 'required|string|max:255' ,
-                'smart_entry_system'            => 'required|in:1,0' ,
-                'chrome_door_handles'           => 'required|in:1,0' ,
-                'rear_parking_sensors'          => 'required|in:1,0' ,
-                'front_parking_sensors'         => 'required|in:1,0' ,
-                'one_touch_electric_sunroof'    => 'required|in:1,0' ,
-                'electrical_side_mirrors'       => 'required|in:1,0' ,
-                'chrome_side_mirrors'           => 'required|in:1,0' ,
-                'automatic_trunk_door'          => 'required|in:1,0' ,
-                'led_backlight_lights'          => 'required|in:1,0' ,
-                'rear_suite'                    => 'required|in:1,0' ,
-                'panorama_roof'                 => 'required|in:1,0' ,
-                'remote_engine_start'           => 'required|in:1,0' ,
-                'electric_hand_brakes'          => 'required|in:1,0' ,
-                'ac_in_second_row_seats'        => 'required|in:1,0' ,
-                'engine_start_button'           => 'required|in:1,0' ,
-                'cruise_control'                => 'required|in:1,0' ,
-                'leather_steering_wheel'        => 'required|in:1,0' ,
-                'heated_seats'                  => 'required|in:1,0' ,
-                'airy_seats'                    => 'required|in:1,0' ,
-                'navigation_system'             => 'required|in:1,0' ,
-                'info_screen'                   => 'required|in:1,0' ,
-                'back_screen'                   => 'required|in:1,0' ,
-                'cd'                            => 'required|in:1,0' ,
-                'bluetooth'                     => 'required|in:1,0' ,
-                'mp3'                           => 'required|in:1,0' ,
-                'usb_audio_system'              => 'required|in:1,0' ,
-                'apple_carplay_android_auto'    => 'required|in:1,0' ,
-                'hdmi'                          => 'required|in:1,0' ,
-                'wireless_charger'              => 'required|in:1,0' ,
-                'front_airbags'                 => 'required|in:1,0' ,
-                'side_airbags'                  => 'required|in:1,0' ,
-                'knee_airbags'                  => 'required|in:1,0' ,
-                'side_curtains'                 => 'required|in:1,0' ,
-                'rear_camera'                   => 'required|in:1,0' ,
-                'vsa'                           => 'required|in:1,0' ,
-                'abs'                           => 'required|in:1,0' ,
-                'ebd'                           => 'required|in:1,0' ,
-                'ess'                           => 'required|in:1,0' ,
-                'ebb'                           => 'required|in:1,0' ,
-                'tpms'                          => 'required|in:1,0' ,
-                'hsa'                           => 'required|in:1,0' ,
-                'ace'                           => 'required|in:1,0' ,
-                'track_control_system'          => 'required|in:1,0' ,
-                'display_info_on_windshield'    => 'required|in:1,0' ,
-                'acc'                           => 'required|in:1,0' ,
-                'rdm'                           => 'required|in:1,0' ,
-                'fcw'                           => 'required|in:1,0' ,
-                'blind_spots'                   => 'required|in:1,0' ,
-                'lsf'                           => 'required|in:1,0' ,
-                'back_traffic_alert'            => 'required|in:1,0' ,
 
             ]);
 
-            if( $car )
+             if( $car )
             {
                 if ( ! $request['is_duplicate'] )
                 {
+                    $request['is_duplicate']=0;
                     $this->update( $request , $car);
                 }else
                 {
 
-                    ! $request->hasFile('main_image')  ? $request['main_image']  = $car['main_image']  : null;
-                    ! $request->hasFile('cover_image') ? $request['cover_image'] = $car['cover_image'] : null;
-                    ! $request->hasFile('share_image') ? $request['share_image'] = $car['share_image'] : null;
-
+                    //  ! $request->hasFile('images')  ? $request['images']  = $car['images']  : null;
                     $this->store( $request ) ;
                 }
 
             }else
             {
+           
+
                 $this->store( $request );
             }
-
-
-        }
-    }
+          } 
 
     public function store(Request $request)
     {
 
-
         $this->authorize('create_cars');
-
-        $data                      = $request->toArray();
+        $request->validate([
+            'car_Images'    => ['required','array','min:2','max:5'],
+            'car_Images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust allowed image types and size as neede
+        ]);
+        $data                      = $request->except('car_Images');
         $data['have_discount']     = $request['have_discount'] === "on";
-        $data['driving_mode']      = json_encode($data['driving_mode']);
-        $data['price_field_value'] = $this->getPriceFieldValue( $data );
-
-        if ($request->file('main_image'))
-            $data['main_image'] =  uploadImage( $request->file('main_image') , "Cars");
-
-        if ($request->file('cover_image'))
-            $data['cover_image'] = uploadImage( $request->file('cover_image') , "Cars");
-
-        if ($request->file('share_image'))
-            $data['share_image'] = uploadImage( $request->file('share_image') , "Cars");
-
-        $this->setCarName($data);
-
-        $car = Car::create($data);
-
-        $car->tags()->attach( $request['tags'] ?? [] );
-
-
-        if ( ! $request['duplicated_images'] )
-        {
-
-            foreach ( $request['colors'] ?? [] as $color )
-            {
-                $outerImages = $this->uploadCarImages( $color['outer_images'] ?? [] );
-                $innerImages = $this->uploadCarImages( $color['inner_images'] ?? [] );
-
-                $car->colors()->attach( $color['id'] , ['outer_images' => json_encode( array_unique($outerImages) ) , 'inner_images' => json_encode( array_unique($innerImages) )  ] );
+        // $data['price'] = $this->getPriceFieldValue( $data );
+        if ($request->file('car_Images')){
+             $images=$this->uploadCarImages($request->file('car_Images'));
+            // $data['images'] =  uploadImage( $request->file('images') , "Cars");
             }
 
-        }else
-        {
-            $duplicatedImages = json_decode( $request['duplicated_images'] , true );
-
-            foreach ( $request['colors'] ?? [] as $color )
-            {
-                $outerImages = array_merge( $this->uploadCarImages( $color['outer_images'] ?? [] ) , $duplicatedImages[ $color['id'] ]['outer_images'] );
-                $innerImages = array_merge( $this->uploadCarImages( $color['inner_images'] ?? [] ) , $duplicatedImages[ $color['id'] ]['inner_images'] );
-
-                $car->colors()->attach( $color['id'] , ['outer_images' => json_encode( array_unique($outerImages) ) , 'inner_images' => json_encode( array_unique($innerImages) )  ] );
-            }
+         $this->setCarName($data);
+         $car = Car::create($data);
+         $this->storeBrandCarsTypeCount($data['is_new'], $data['brand_id']);
+         if ($request->file('car_Images')){
+            foreach( $images as $image){
+             $imageData=[
+                'car_id'=>$car->id,
+                'image'=>$image,
+            ];
+            CarImage::create($imageData);
         }
+        $car->main_image=$car->images[0]->image;
+        $car->save();
 
-
-
-
-        $this->storeBrandCarsTypeCount($data['is_new'], $data['brand_id']);
-
+     }
     }
-
     public function update(Request $request , Car $car)
     {
+  
         $this->authorize('update_cars');
 
-        $data                      = $request->toArray();
-        $oldCarColorImages         = json_decode($request['updatedColorsImages'] , true);
-        $data['have_discount']     = $request['have_discount'] === "on";
-        $data['driving_mode']      = json_encode($data['driving_mode']);
-        $data['price_field_value'] = $this->getPriceFieldValue( $data );
+           $data                      = $request->except('car_Images','deleted_images');
+         $data['have_discount']     = $request['have_discount'] === "on";
 
-        if ($request->file('main_image'))
-        {
-            deleteImage($data['main_image'],"Cars");
-            $data['main_image'] = uploadImage( $request->file('main_image') , "Cars");
-        }
-
-        if ($request->file('cover_image'))
-        {
-            deleteImage($data['cover_image'],"Cars");
-            $data['cover_image'] = uploadImage( $request->file('cover_image') , "Cars");
-        }
-
-        if ($request->file('share_image'))
-        {
-            if( $data['share_image'] )
-                deleteImage($data['share_image'],"Cars");
-
-            $data['share_image'] = uploadImage( $request->file('share_image') , "Cars");
-        }
-
+        
         $this->setCarName($data);
 
         $carOldType = $car['is_new'];
         $carOldBrandId = $car['brand_id'];
+ 
         $car->update($data);
-
-        $car->tags()->sync( $request['tags'] ?? [] );
-
-        $colors = array_values( $this->cleanColorsArray( $request['colors'] , $oldCarColorImages) );
-
-         foreach ( $colors ?? [] as $color )
-        {
-            $carImages         = $car->colors->where('id',$color['id'])->pluck('pivot')->first();
-            $oldImages         = $oldCarColorImages[ $color['id'] ] ?? [];
-            $carOuterImages    = array_key_exists('outer_images',$oldImages) ? json_decode($oldImages['outer_images'] ?? "[]") : json_decode($carImages['outer_images'] ?? "[]");
-            $carInnerImages    = array_key_exists('inner_images',$oldImages) ? json_decode($oldImages['inner_images'] ?? "[]") : json_decode($carImages['inner_images'] ?? "[]");
-            $outerImages       = [];
-            $innerImages       = [];
-
-            if( $color['outer_images'] ?? false )
-                $outerImages = $this->uploadCarImages( $color['outer_images'] );
-
-            if( $color['inner_images'] ?? false )
-                $innerImages = $this->uploadCarImages( $color['inner_images'] );
-
-            if ($carImages)
-                $car->colors()->updateExistingPivot( $color['id'] , ['outer_images' => json_encode( array_unique( array_merge($carOuterImages,$outerImages) ) ), 'inner_images' => json_encode( array_unique( array_merge($carInnerImages,$innerImages) ) ) ] );
-            else
-                $car->colors()->attach( $color['id'] , ['outer_images' => json_encode( array_unique( array_merge($carOuterImages,$outerImages) ) ), 'inner_images' => json_encode( array_unique( array_merge($carInnerImages,$innerImages) ) ) ] );
-
-        }
-
-        foreach($car->colors->pluck('id') as $colorId)
-        {
-            if( ! in_array($colorId,array_column($request['colors'],'id')) )
-            {
-                $car->colors()->detach($colorId);
-                foreach(json_decode($car->colors->where('id',$colorId)->first()->pivot->outer_images) as $outerImage)
-                {
-                    deleteImage($outerImage,"Cars");
-                }
-                foreach(json_decode($car->colors->where('id',$colorId)->first()->pivot->inner_images) as $innerImage)
-                {
-                    deleteImage($innerImage,"Cars");
-                }
-            }
-        }
-
+         CarImage::handleProductImages($car->id);
+ 
+         $car->main_image=$car->images[0]->image;
+         $car->save();
         if( $carOldBrandId == $data['brand_id'] )
         {
             $this->updateBrandCarsTypeCount(action: 'update', oldCarType:$carOldType, currentBrandId: $data['brand_id'], newCarType: $data['is_new']);
@@ -353,22 +169,47 @@ class CarController extends Controller
             $this->updateBrandCarsTypeCount('update', $carOldType, $carOldBrandId, $data['brand_id'], newCarType: $data['is_new']);
 
     }
+public function show(Car $car){
+    $car->load('colors');
+    $models = CarModel::select('id','name_' . getLocale())->get();
+    $brands = Brand::select('id','name_' . getLocale())->get();
+    $cities = City::select('id','name_' . getLocale())->get();
+    $categories=Category::select('id','name_' . getLocale())->get();
+    $colors = Color::select('id','image','name_' . getLocale(),'hex_code')->get();
+    $relatedImages = $car->images;
+    return view('dashboard.cars.show',compact('brands','colors','car','models','cities','categories','relatedImages'));
+}
+    // private  function cleanColorsArray($colors , $oldCarColorImages)
+    // {
+    //     return array_filter( $colors , fn ($color) => ( $color['inner_images'] ?? false ) || ( $color['outer_images'] ?? false ) || array_key_exists( $color['id'] ,$oldCarColorImages ));
+    // }
 
-    private  function cleanColorsArray($colors , $oldCarColorImages)
-    {
-        return array_filter( $colors , fn ($color) => ( $color['inner_images'] ?? false ) || ( $color['outer_images'] ?? false ) || array_key_exists( $color['id'] ,$oldCarColorImages ));
+
+    public function images(Car $car){
+        $carImages = $car->images->toArray();
+        $images =  scandir(public_path('/storage/Images/Cars'));
+        foreach ( $carImages as $imageName )
+        {          
+            $imageName = $imageName['image'];
+            if (in_array($imageName, $images)) {
+                $image['image'] = $imageName;
+                $filePath = public_path("/storage/Images/Cars/$imageName");
+                $image['size'] = filesize($filePath);
+                $image['path'] = asset("/storage/Images/Cars/$imageName");
+                $data[] = $image;
+            }
+        }
+
+        return response()->json($data);
     }
-
     private function setCarName(&$data)
     {
         $brand    = Brand::find( $data['brand_id'] , ['id','name_ar','name_en']);
         $model    = CarModel::find( $data['model_id'] , ['id','name_ar','name_en']);
-        $subModel = CarModel::find( $data['sub_model_id'] , ['id','name_ar','name_en']);
-
-
-        $data['name_ar'] = $brand->name_ar . ' ' . $model->name_ar. ' ' . $subModel->name_ar . ' ' . $data['year'];
-        $data['name_en'] = $brand->name_en . ' ' . $model->name_en. ' ' . $subModel->name_en . ' ' . $data['year'];
+        $data['name_ar'] = $brand->name_ar . ' ' . $model->name_ar. ' ' . $data['year'];
+        $data['name_en'] = $brand->name_en . ' ' . $model->name_en. ' ' .  $data['year'];
     }
+
     private function uploadCarImages( $images )
     {
         $imagesNames = [];
@@ -383,24 +224,11 @@ class CarController extends Controller
 
     private function getPriceFieldValue($data) : string
     {
-        switch ( $data['price_field_status'] )
-        {
-            case 'show':
-                if(array_key_exists('discount_price',$data)) $value =  "<h6 class='price-before'> <span>".$data['price']."</span> <span class='currency-value' ></span> </h6>
-                <h6 class='price-now'> <span class='price-word' ></span>". $data['discount_price'] ."<span class='currency-value' ></span> </h6>";
-                else $value =  "<h6 class='price-before'></h6>
-                <h6 class='price-now'> <span class='price-word' > </span>". $data['price'] ."<span class='currency-value' ></span> </h6>";
-                break;
-            case 'competitive_price'       : $value =  "competitive price";
-                break;
-            case 'unavailable'             : $value =  "unavailable";
-                break;
-            case 'available_on_request'    : $value =  "available on request";
-                break;
-            case 'other'                   : $value =  json_encode(['text_ar' => $data['other_text_ar'], 'text_en' => $data['other_text_en']]);
-                break;
-            default                        : $value = '';
-        }
+        if(array_key_exists('discount_price',$data)) $value =  "<h6 class='price-before'> <span>".$data['price']."</span> <span class='currency-value' ></span> </h6>
+        <h6 class='price-now'> <span class='price-word' ></span>". $data['discount_price'] ."<span class='currency-value' ></span> </h6>";
+        else $value =  "<h6 class='price-before'></h6>
+        <h6 class='price-now'> <span class='price-word' > </span>". $data['price'] ."<span class='currency-value' ></span> </h6>";
+      
         return $value;
 
     }
@@ -423,8 +251,7 @@ class CarController extends Controller
 
             if($brand->car_available_types != 'both')
             {
-                // dd($carType, $brand->car_available_types);
-                if($carType == 1)
+                 if($carType == 1)
                 {
                     if($brand->car_available_types != 'used' )
                         $brand->update(['car_available_types' => 'new']);
@@ -442,8 +269,7 @@ class CarController extends Controller
 
     private function updateBrandCarsTypeCount($action, $oldCarType, $currentBrandId, $newBrandId = null, $newCarType = null)
     {
-        // dd($currentBrandId, $newBrandId);
-        $currentBrand = Brand::find($currentBrandId);
+         $currentBrand = Brand::find($currentBrandId);
         $currentBrandNewCarsCount = $currentBrand->newCars->count();
         $currentBrandUsedCarsCount = $currentBrand->oldCars->count();
 
@@ -486,8 +312,7 @@ class CarController extends Controller
                 }
                 else if($oldCarType == 0 && $newCarType == 1) // change from used to new
                 {
-                    // dd('used to new', $currentBrandUsedCarsCount, $currentBrandNewCarsCount);
-                    if ($currentBrandNewCarsCount == 1)
+                     if ($currentBrandNewCarsCount == 1)
                     {
                         if($currentBrandUsedCarsCount > 0)
                         {
@@ -501,8 +326,7 @@ class CarController extends Controller
         }
         else // update brand or brand and type
         {
-            // dd($oldCarType, $newCarType);
-            $newBrand = Brand::find($newBrandId);
+             $newBrand = Brand::find($newBrandId);
             $newBrandNewCarsCount = $newBrand->newCars->count();
             $newBrandUsedCarsCount = $newBrand->oldCars->count();
 

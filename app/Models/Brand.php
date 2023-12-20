@@ -20,14 +20,11 @@ class Brand extends Model
         return $this->attributes['name_' . getLocale() ];
     }
 
-    public function parentModels() : \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(CarModel::class)->whereNull('parent_model_id');
-    }
+    
 
-    public function subModels() : \Illuminate\Database\Eloquent\Relations\HasMany
+    public function models() : \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(CarModel::class)->whereNotNull('parent_model_id');
+        return $this->hasMany(CarModel::class);
     }
 
     public function cars() : \Illuminate\Database\Eloquent\Relations\HasMany

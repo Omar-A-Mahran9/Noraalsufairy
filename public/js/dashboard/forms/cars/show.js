@@ -10,7 +10,6 @@ let undoDeleteBtn = $("#undo-delete-image");
 let previouslySelected = [];
 let updatedColorsImages = {};
 let duplicatedImages = {};
-let deletedImagesNames = [];
 
 $(document).ready(() => {
     undoDeleteBtn.click(function () {
@@ -272,12 +271,9 @@ var myDropzone = new Dropzone("#kt_dropzonejs_example_1", {
     maxFiles: 10,
     maxFilesize: 10, // MB
     addRemoveLinks: true,
-    dictFileTooBig:
-        "الملف كبير جدًا ({{filesize}}ميغا بايت). الحد الأقصى لحجم الملف: {{maxFilesize}} ميغا بايت.",
-    dictMaxFilesExceeded: "لا يمكنك تحميل اكثر من {{maxFiles}} من الملفات.",
-    dictFallbackMessage: "متصفحك لا يدعم تحميلات السحب والإفلات.",
-    dictInvalidFileType: "لا يمكنك تحميل ملفات من هذا النوع.",
-    dictResponseError: "استجاب الخادم برمز {{statusCode}}.",
+    clickable: false, // enable clicking to add files
+    addRemoveLinks: false, // allow removing files
+
     accept: function (file, done) {
         if (file.name == "wow.jpg") {
             done("Naha, you don't.");
@@ -285,31 +281,9 @@ var myDropzone = new Dropzone("#kt_dropzonejs_example_1", {
             done();
         }
     },
-    init: function () {
-        // Get images
-        if (window.setDropzoneImages) setDropzoneImages(this);
-        $("#car_Images").prop("files", new FileListItems(this));
-    },
-    success: function (file, response) {
-        $("#images_input").prop("files", new FileListItems(myDropzone.files));
-    },
-    removedfile: function (file) {
-        $("#car_Images").prop("files", new FileListItems(myDropzone.files));
-        file.previewElement.remove();
-        if (!(file instanceof File)) {
-            deletedImagesNames.push(file.name);
-            $(`[name='deleted_images']`).val(
-                JSON.stringify(deletedImagesNames)
-            );
-        }
-    },
 });
+setDropzoneImages(myDropzone);
 
 let cleanImageName = (image) => {
     return image.replaceAll("/", "").replaceAll(".", "").replaceAll(" ", "");
 };
-function FileListItems(files) {
-    var b = new ClipboardEvent("").clipboardData || new DataTransfer();
-    for (var i = 0, len = files.length; i < len; i++) b.items.add(files[i]);
-    return b.files;
-}

@@ -19,9 +19,8 @@ class ModelController extends Controller
 
         if ( $request->ajax() )
         {
-            $relations     = [ 'brand' => [ 'id','name_' . getLocale() ] , 'parentModel' => ['id' , 'name_' . getLocale()] ];
-            $andsFilters   = $request['type'] == 'parent' ? [ [ 'parent_model_id' , '=' , null ] ] : [ [ 'parent_model_id' , '!=' , null ] ];
-            $models        = getModelData( model : new CarModel() , andsFilters : $andsFilters , relations : $relations );
+            $relations     = [ 'brand' => [ 'id','name_' . getLocale() ] ];
+            $models        = getModelData( model : new CarModel() , relations : $relations );
 
             return response()->json($models);
         }

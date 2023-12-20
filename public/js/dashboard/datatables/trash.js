@@ -15,7 +15,7 @@
             searchDelay: 500,
             processing: true,
             serverSide: true,
-            order: null, // display records number and ordering type
+            order: [], // display records number and ordering type
             stateSave: false,
             select: {
                 style: 'os',

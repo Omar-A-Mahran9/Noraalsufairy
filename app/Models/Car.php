@@ -10,22 +10,29 @@ use Illuminate\Support\Arr;
 
 class Car extends Model
 {
+    
     use HasFactory,SoftDeletes;
 
     protected $guarded            = [];
     protected $appends            = ['name', 'selling_price', 'price_after_vat'];
     protected $casts              = ['created_at' => 'date:Y-m-d', 'updated_at' => 'date:Y-m-d'];
-    static array $carCardColumns  = [ 'id', 'main_image', 'cover_image', 'name_ar' , 'name_en' , 'is_new', 'price_field_value', 'price_field_status', 'year',
-                                    'fuel_consumption', 'upholstered_seats', 'traction_type', 'have_discount', 'discount_price', 'price', 'kilometers'];
-
-    protected static function booted()
+    static array $carCardColumns  = [ 'id', 'name_ar' , 'name_en' , 'is_new', 'price', 'price_field_status', 'year',
+                                      'have_discount', 'discount_price', 'price', 'kilometers','fuel_type','main_image'];
+     protected static function booted()
     {
+      
         if(request()->segment(1) != 'dashboard')
         {
             static::addGlobalScope('availableCars', function(Builder $builder){
-                $builder->where('status','1')->whereHas('colors');
+                    $builder->where('status','1')->whereHas('colors');
             });
         }
+
+    }
+
+    public function images()
+    {
+    return $this->hasMany(CarImage::class, 'car_id');
     }
 
     public function getNameAttribute()
@@ -51,12 +58,6 @@ class Car extends Model
         return $this->belongsTo(Color::class);
     }
 
-    public function color()
-    {
-        return $this->hasOne(Color::class,'id','color_id');
-    }
-
-
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
@@ -65,6 +66,11 @@ class Car extends Model
     public function brand()
     {
         return $this->belongsTo( Brand::class );
+    }
+
+    public function model()
+    {
+        return $this->belongsTo( CarModel::class );
     }
 
     public function offers()

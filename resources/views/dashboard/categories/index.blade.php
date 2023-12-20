@@ -2,7 +2,6 @@
 @push('styles')
     <link href="{{ asset('dashboard-assets/css/datatables' . (isDarkMode() ? '.dark' : '') . '.bundle.css') }}"
         rel="stylesheet" type="text/css" />
-    <link href="{{ asset('dashboard-assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 @section('content')
     <!-- begin :: Subheader -->
@@ -15,7 +14,7 @@
                 class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
 
                 <!-- begin :: Title -->
-                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">{{ __('Cars') }}</h1>
+                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">{{ __('Categories') }}</h1>
                 <!-- end   :: Title -->
 
                 <!-- begin :: Separator -->
@@ -26,7 +25,7 @@
                 <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
                     <!-- begin :: Item -->
                     <li class="breadcrumb-item text-muted">
-                        {{ __('Cars list') }}
+                        {{ __('Categories list') }}
                     </li>
                     <!-- end   :: Item -->
                 </ul>
@@ -54,9 +53,9 @@
                         <i class="fa fa-search fa-lg"></i>
                     </span>
 
-                    <input type="text"
-                        class="form-control form-control-solid w-250px ps-15 border-gray-300 border-1 me-4"
+                    <input type="text" class="form-control form-control-solid w-250px ps-15 border-gray-300 border-1"
                         id="general-search-inp" placeholder="{{ __('Search ...') }}">
+
 
                 </div>
                 <!-- end   :: General Search -->
@@ -65,14 +64,14 @@
                 <div class="d-flex justify-content-end" data-kt-docs-table-toolbar="base">
 
                     <!-- begin :: Add Button -->
-                    <a href="{{ route('dashboard.cars.create') }}" class="btn btn-primary" data-bs-toggle="tooltip"
+                    <a href="{{ route('dashboard.categories.create') }}" class="btn btn-primary" data-bs-toggle="tooltip"
                         title="">
 
                         <span class="svg-icon svg-icon-2">
                             <i class="fa fa-plus fa-lg"></i>
                         </span>
 
-                        {{ __('Add new car') }}
+                        {{ __('Add new category') }}
 
                     </a>
                     <!-- end   :: Add Button -->
@@ -86,16 +85,14 @@
             <!-- end   :: Filter -->
 
             <!-- begin :: Datatable -->
-            <table id="kt_datatable" class="table text-center table-row-dashed fs-6 gy-5">
+            <table data-ordering="false" id="kt_datatable" class="table text-center table-row-dashed fs-6 gy-5">
 
                 <thead>
                     <tr class="text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th>#</th>
-                        <th>{{ __('images') }}</th>
-                        <th>{{ getLocale() == 'ar' ? __('arabic name') : __('english name') }}</th>
-                        <th>{{ __('price') }}</th>
-                        <th>{{ __('Discount price') }}</th>
-                        <th>{{ __('Brand') }}</th>
+                        <th>{{ __('arabic name') }}</th>
+                        <th>{{ __('english name') }}</th>
+                        <th>{{ __('created date') }}</th>
                         <th class="min-w-100px">{{ __('actions') }}</th>
                     </tr>
                 </thead>
@@ -105,16 +102,14 @@
                 </tbody>
             </table>
             <!-- end   :: Datatable -->
+
+
         </div>
         <!-- end   :: Card Body -->
     </div>
     <!-- end   :: Datatable card -->
 @endsection
 @push('scripts')
-    <script>
-        let lightboxPath = "{{ asset('dashboard-assets/plugins/custom/fslightbox/fslightbox.bundle.js') }}";
-    </script>
-
     <script src="{{ asset('js/dashboard/datatables/datatables.bundle.js') }}"></script>
-    <script src="{{ asset('js/dashboard/datatables/cars.js') }}"></script>
+    <script src="{{ asset('js/dashboard/datatables/categories.js') }}"></script>
 @endpush

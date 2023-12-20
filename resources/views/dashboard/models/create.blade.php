@@ -71,20 +71,7 @@
                         </div>
                         <!-- end   :: Column -->
 
-                        @if( request('type') === "sub")
-                        <!-- begin :: Column -->
-                        <div class="col-md-6 fv-row">
-
-                            <label class="fs-5 fw-bold mb-2">{{ __("Main model") }}</label>
-                            <select class="form-select" data-control="select2" name="parent_model_id" id="parent-model-sp" data-placeholder="{{ __("Choose the main model") }}" data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
-                                <option value="" selected ></option>
-                            </select>
-                            <p class="invalid-feedback" id="parent_model_id" ></p>
-
-
-                        </div>
-                        <!-- end   :: Column -->
-                        @endif
+                        
 
                     </div>
                     <!-- end   :: Row -->

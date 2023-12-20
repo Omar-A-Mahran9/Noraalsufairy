@@ -1,18 +1,18 @@
 @extends('partials.dashboard.master')
 @section('content')
-
     <!-- begin :: Subheader -->
     <div class="toolbar">
 
         <div class="container-fluid d-flex flex-stack">
 
             <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
-                 data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
-                 class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
+                class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
 
                 <!-- begin :: Title -->
-                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1"><a href="{{ route('dashboard.offers.index') }}"
-                    class="text-muted text-hover-primary">{{ __("Offers") }}</a></h1>
+                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1"><a
+                        href="{{ route('dashboard.offers.index') }}"
+                        class="text-muted text-hover-primary">{{ __('Offers') }}</a></h1>
                 <!-- end   :: Title -->
 
                 <!-- begin :: Separator -->
@@ -23,7 +23,7 @@
                 <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
                     <!-- begin :: Item -->
                     <li class="breadcrumb-item text-muted">
-                        {{ __("Add new offer") }}
+                        {{ __('Add new offer') }}
                     </li>
                     <!-- end   :: Item -->
                 </ul>
@@ -40,18 +40,20 @@
         <!-- begin :: Card body -->
         <div class="card-body p-0">
             <!-- begin :: Form -->
-            <form action="{{ route('dashboard.offers.store') }}" class="form" method="post" id="submitted-form" data-redirection-url="{{ route('dashboard.offers.index') }}">
-            @csrf
-            <!-- begin :: Card header -->
+            <form action="{{ route('dashboard.offers.store') }}" class="form" method="post" id="submitted-form"
+                data-redirection-url="{{ route('dashboard.offers.index') }}">
+                @csrf
+                <!-- begin :: Card header -->
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <div class="card-title">
-                        <h3 class="fw-bolder text-dark">{{ __("Add new offer") }}</h3>
+                        <h3 class="fw-bolder text-dark">{{ __('Add new offer') }}</h3>
                     </div>
                     <div class="card-title">
 
                         <div class="form-check form-switch form-check-custom form-check-solid mb-2">
-                            <label class="fs-5 fw-bold mx-4">{{ __("status") }}</label>
-                            <input class="form-check-input mx-2" style="height: 18px;width:36px;" name="status" type="checkbox" checked  />
+                            <label class="fs-5 fw-bold mx-4">{{ __('status') }}</label>
+                            <input class="form-check-input mx-2" style="height: 18px;width:36px;" name="status"
+                                type="checkbox" checked />
                             <label class="form-check-label" for="flexSwitchChecked"></label>
                         </div>
 
@@ -70,9 +72,10 @@
 
                             <div class="d-flex flex-column">
                                 <!-- begin :: Upload image component -->
-                                <label class="text-center fw-bold mb-4">{{ __("Image") }}</label>
-                                <x-dashboard.upload-image-inp name="image" :image="null" :directory="null" placeholder="default.jpg" type="editable" ></x-dashboard.upload-image-inp>
-                                <p class="invalid-feedback" id="image" ></p>
+                                <label class="text-center fw-bold mb-4">{{ __('Image') }}</label>
+                                <x-dashboard.upload-image-inp name="image" :image="null" :directory="null"
+                                    placeholder="default.jpg" type="editable"></x-dashboard.upload-image-inp>
+                                <p class="invalid-feedback" id="image"></p>
                                 <!-- end   :: Upload image component -->
                             </div>
 
@@ -89,14 +92,15 @@
                         <!-- begin :: Column -->
                         <div class="col-md-6 fv-row">
 
-                            <label class="fs-5 fw-bold mb-2">{{ __("Title in arabic") }}</label>
+                            <label class="fs-5 fw-bold mb-2">{{ __('Title in arabic') }}</label>
 
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="title_ar_inp" name="title_ar" placeholder="example"/>
-                                <label for="title_ar_inp">{{ __("Enter the title in arabic") }}</label>
+                                <input type="text" class="form-control" id="title_ar_inp" name="title_ar"
+                                    placeholder="example" />
+                                <label for="title_ar_inp">{{ __('Enter the title in arabic') }}</label>
                             </div>
 
-                            <p class="invalid-feedback" id="title_ar" ></p>
+                            <p class="invalid-feedback" id="title_ar"></p>
 
 
                         </div>
@@ -105,13 +109,14 @@
                         <!-- begin :: Column -->
                         <div class="col-md-6 fv-row">
 
-                            <label class="fs-5 fw-bold mb-2">{{ __("Title in english") }}</label>
+                            <label class="fs-5 fw-bold mb-2">{{ __('Title in english') }}</label>
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="title_en_inp" name="title_en" placeholder="example"/>
-                                <label for="title_en_inp">{{ __("Enter the title in english") }}</label>
+                                <input type="text" class="form-control" id="title_en_inp" name="title_en"
+                                    placeholder="example" />
+                                <label for="title_en_inp">{{ __('Enter the title in english') }}</label>
                             </div>
 
-                            <p class="invalid-feedback" id="title_en" ></p>
+                            <p class="invalid-feedback" id="title_en"></p>
 
 
                         </div>
@@ -127,15 +132,18 @@
                         <!-- begin :: Column -->
                         <div class="col-md-12 fv-row">
 
-                            <label class="fs-5 fw-bold mb-2">{{ __("Cars") }}</label>
+                            <label class="fs-5 fw-bold mb-2">{{ __('Cars') }}</label>
 
-                            <select class="form-select"  name="cars[]" multiple id="cars-sp" data-placeholder="{{ __("Choose the car") }}" data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}"  >
-                                @foreach( $cars as $car)
-                                    <option value="{{ $car['id'] }}" data-main-image="{{ getImagePathFromDirectory( $car['main_image'] , 'Cars') }}"> {{ $car['name'] }} </option>
+                            <select class="form-select" name="cars[]" multiple id="cars-sp"
+                                data-placeholder="{{ __('Choose the car') }}" data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
+                                @foreach ($cars as $car)
+                                    <option value="{{ $car['id'] }}"
+                                        data-main-image="{{ getImagePathFromDirectory($car->images[0]->image, 'cars') }}">
+                                        {{ $car['name'] }} </option>
                                 @endforeach
                             </select>
 
-                            <p class="invalid-feedback" id="cars" ></p>
+                            <p class="invalid-feedback" id="cars"></p>
 
 
                         </div>
@@ -152,7 +160,7 @@
                         <!-- begin :: Column -->
                         <div class="col-md-6 fv-row">
 
-                            <label class="fs-5 fw-bold mb-2">{{ __("Description in arabic") }}</label>
+                            <label class="fs-5 fw-bold mb-2">{{ __('Description in arabic') }}</label>
                             <textarea id="tinymce_description_ar" name="description_ar" class="tinymce"></textarea>
                             <p class="text-danger invalid-feedback" id="description_ar"></p>
 
@@ -163,7 +171,7 @@
                         <!-- begin :: Column -->
                         <div class="col-md-6 fv-row">
 
-                            <label class="fs-5 fw-bold mb-2">{{ __("Description in english") }}</label>
+                            <label class="fs-5 fw-bold mb-2">{{ __('Description in english') }}</label>
                             <textarea id="tinymce_description_en" name="description_en" class="tinymce"></textarea>
                             <p class="text-danger error-element" id="description_en"></p>
 
@@ -184,10 +192,10 @@
                     <!-- begin :: Submit btn -->
                     <button type="submit" class="btn btn-primary" id="submit-btn">
 
-                        <span class="indicator-label">{{ __("Save") }}</span>
+                        <span class="indicator-label">{{ __('Save') }}</span>
 
                         <!-- begin :: Indicator -->
-                        <span class="indicator-progress">{{ __("Please wait ...") }}
+                        <span class="indicator-progress">{{ __('Please wait ...') }}
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                         </span>
                         <!-- end   :: Indicator -->
@@ -202,14 +210,11 @@
         </div>
         <!-- end   :: Card body -->
     </div>
-
 @endsection
 @push('scripts')
-
     <script src="{{ asset('dashboard-assets/plugins/custom/tinymce/tinymce.bundle.js') }}"></script>
 
     <script>
-
         let discountInp = $("#discount_price_inp");
 
         // Format options
@@ -219,7 +224,7 @@
                 return item.text;
             }
 
-            let url =  item.element.getAttribute('data-main-image');
+            let url = item.element.getAttribute('data-main-image');
 
 
             let span = $("<span>");
@@ -235,21 +240,20 @@
         }
 
 
-        $(document).ready( () => {
+        $(document).ready(() => {
 
             initTinyMc(true);
 
-            $("#discount-price-switch").change( function () {
-                discountInp.prop('disabled' , ! $(this).prop('checked'))
+            $("#discount-price-switch").change(function() {
+                discountInp.prop('disabled', !$(this).prop('checked'))
             });
 
             $('#cars-sp').select2({
-                templateResult: function (item) {
+                templateResult: function(item) {
                     return format(item);
                 }
             });
 
         });
-
     </script>
 @endpush

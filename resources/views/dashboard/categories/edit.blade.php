@@ -11,8 +11,8 @@
 
                 <!-- begin :: Title -->
                 <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1"><a
-                        href="{{ route('dashboard.models.index') }}"
-                        class="text-muted text-hover-primary">{{ __('Models') }}</a></h1>
+                        href="{{ route('dashboard.categories.index') }}"
+                        class="text-muted text-hover-primary">{{ __('Categories') }}</a></h1>
                 <!-- end   :: Title -->
 
                 <!-- begin :: Separator -->
@@ -23,7 +23,7 @@
                 <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
                     <!-- begin :: Item -->
                     <li class="breadcrumb-item text-muted">
-                        {{ __('Edit model') }}
+                        {{ __('Edit Category') }}
                     </li>
                     <!-- end   :: Item -->
                 </ul>
@@ -40,15 +40,14 @@
         <!-- begin :: Card body -->
         <div class="card-body p-0">
             <!-- begin :: Form -->
-            <form action="{{ route('dashboard.models.update', $model->id) }}" class="form" method="post"
-                id="submitted-form"
-                data-redirection-url="{{ route('dashboard.models.index', ['type' => request('type')]) }}">
+            <form action="{{ route('dashboard.categories.update', $category->id) }}" class="form" method="post"
+                id="submitted-form" data-redirection-url="{{ route('dashboard.categories.index') }}">
                 @csrf
                 @method('PUT')
-                <input type="hidden" value="{{ request('type') }}" name="model_type">
+
                 <!-- begin :: Card header -->
                 <div class="card-header d-flex align-items-center">
-                    <h3 class="fw-bolder text-dark">{{ __('Edit model') . ' : ' . $model->name }}</h3>
+                    <h3 class="fw-bolder text-dark">{{ __('Edit category') . ' : ' . $category->name }}</h3>
                 </div>
                 <!-- end   :: Card header -->
 
@@ -60,40 +59,12 @@
                     <div class="row mb-10">
 
                         <!-- begin :: Column -->
-                        <div class="col-md-{{ request('type') == 'parent' ? '12' : '6' }} fv-row">
-
-                            <label class="fs-5 fw-bold mb-2">{{ __('Brand') }}</label>
-                            <select class="form-select" data-control="select2" name="brand_id" id="brand-sp"
-                                data-placeholder="{{ __('Choose the brand') }}"
-                                data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
-                                @foreach ($brands as $brand)
-                                    <option value="{{ $brand->id }}"
-                                        {{ $brand->id == $model->brand_id ? 'selected' : '' }}> {{ $brand->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <p class="invalid-feedback" id="brand_id"></p>
-
-
-                        </div>
-                        <!-- end   :: Column -->
-
-
-
-                    </div>
-                    <!-- end   :: Row -->
-
-
-                    <!-- begin :: Row -->
-                    <div class="row mb-10">
-
-                        <!-- begin :: Column -->
-                        <div class="col-md-6 fv-row">
+                        <div class="col-md-4 fv-row">
 
                             <label class="fs-5 fw-bold mb-2">{{ __('Name in arabic') }}</label>
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="name_ar_inp" name="name_ar"
-                                    value="{{ $model->name_ar }}" placeholder="example" />
+                                    value="{{ $category->name_ar }}" placeholder="example" />
                                 <label for="name_ar_inp">{{ __('Enter the name in arabic') }}</label>
                             </div>
                             <p class="invalid-feedback" id="name_ar"></p>
@@ -103,16 +74,37 @@
                         <!-- end   :: Column -->
 
                         <!-- begin :: Column -->
-                        <div class="col-md-6 fv-row">
+                        <div class="col-md-4 fv-row">
 
                             <label class="fs-5 fw-bold mb-2">{{ __('Name in english') }}</label>
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="name_en_inp" name="name_en"
-                                    value="{{ $model->name_en }}" placeholder="example" />
+                                    value="{{ $category->name_en }}" placeholder="example" />
                                 <label for="name_en_inp">{{ __('Enter the name in english') }}</label>
                             </div>
                             <p class="invalid-feedback" id="name_en"></p>
 
+
+                        </div>
+
+                        <div class="col-md-4 fv-row">
+
+                            <label class="fs-5 fw-bold mb-2">{{ __('Category') }}</label>
+                            <select class="form-select" data-control="select2" name="model_id" id="model-sp"
+                                data-placeholder="{{ __('Choose the category') }}"
+                                data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
+                                @foreach ($models as $model)
+                                    <option value="{{ $model->id }}"
+                                        {{ $model->id == $category->model_id ? 'selected' : '' }}> {{ $model->name }}
+                                    </option>
+                                @endforeach
+
+
+
+
+                            </select>
+
+                            <p class="invalid-feedback" id="model_id"></p>
 
                         </div>
                         <!-- end   :: Column -->
@@ -129,7 +121,7 @@
                             <label class="fs-5 fw-bold mb-2">{{ __('Meta tag keywords in arabic') }}</label>
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="meta_keyword_ar_inp" name="meta_keyword_ar"
-                                    value="{{ $model->meta_keyword_ar }}" placeholder="example" />
+                                    value="{{ $category->meta_keyword_ar }}" placeholder="example" />
                                 <label for="meta_keyword_ar_inp">{{ __('Enter the meta tag keywords in arabic') }}</label>
                             </div>
                             <p class="invalid-feedback" id="meta_keyword_ar"></p>
@@ -144,7 +136,7 @@
                             <label class="fs-5 fw-bold mb-2">{{ __('Meta tag keywords in english') }}</label>
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="meta_keyword_en_inp" name="meta_keyword_en"
-                                    value="{{ $model->meta_keyword_en }}" placeholder="example" />
+                                    value="{{ $category->meta_keyword_en }}" placeholder="example" />
                                 <label for="meta_keyword_en_inp">{{ __('Enter the meta tag keywords in english') }}</label>
                             </div>
                             <p class="invalid-feedback" id="meta_keyword_en"></p>
@@ -165,7 +157,7 @@
                             <label class="fs-5 fw-bold mb-2">{{ __('Meta description in arabic') }}</label>
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="meta_desc_ar_inp" name="meta_desc_ar"
-                                    value="{{ $model->meta_desc_ar }}" placeholder="example" />
+                                    value="{{ $category->meta_desc_ar }}" placeholder="example" />
                                 <label for="meta_desc_ar_inp">{{ __('Enter the meta tag description in arabic') }}</label>
                             </div>
                             <p class="invalid-feedback" id="meta_desc_ar"></p>
@@ -180,7 +172,7 @@
                             <label class="fs-5 fw-bold mb-2">{{ __('Meta description in english') }}</label>
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="meta_desc_en_inp" name="meta_desc_en"
-                                    value="{{ $model->meta_desc_en }}" placeholder="example" />
+                                    value="{{ $category->meta_desc_en }}" placeholder="example" />
                                 <label
                                     for="meta_desc_en_inp">{{ __('Enter the meta tag description in english') }}</label>
                             </div>
@@ -223,16 +215,12 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/dashboard/forms/car_models/common.js') }}"></script>
     <script>
-        $(document).ready(() => {
-            brandsSp.trigger('change', "{{ $model->parent_model_id }}");
-            new Tagify(document.getElementById('meta_keyword_ar_inp'), {
-                originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
-            });
-            new Tagify(document.getElementById('meta_keyword_en_inp'), {
-                originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
-            });
+        new Tagify(document.getElementById('meta_keyword_ar_inp'), {
+            originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
+        });
+        new Tagify(document.getElementById('meta_keyword_en_inp'), {
+            originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
         });
     </script>
 @endpush

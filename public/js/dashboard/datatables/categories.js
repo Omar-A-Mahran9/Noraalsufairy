@@ -10,11 +10,11 @@ let KTDatatable = (function () {
     // Private functions
     let initDatatable = function () {
         datatable = $("#kt_datatable").DataTable({
-            orderable: false,
+            ordering: false,
             searchDelay: 500,
             processing: true,
             serverSide: true,
-            order: [], // display records number and ordering type
+            order: [[4, "desc"]], // display records number and ordering type
             stateSave: false,
             select: {
                 style: "os",
@@ -23,62 +23,25 @@ let KTDatatable = (function () {
             },
             ajax: {
                 data: function () {
-                    console.log('ggfggg')
                     let datatable = $("#kt_datatable");
                     let info = datatable.DataTable().page.info();
                     datatable
                         .DataTable()
                         .ajax.url(
-                            `/dashboard/cars?page=${info.page + 1}&per_page=${
-                                info.length
-                            }`
+                            `/dashboard/categories?page=${
+                                info.page + 1
+                            }&per_page=${info.length}`
                         );
                 },
             },
             columns: [
                 { data: "id" },
-                { data: "main_image" },
-                { data: "name_" + locale },
-                { data: "price" },
-                { data: "discount_price" },
-                { data: "brand.name", name: "brand_id" },
+                { data: "name_ar" },
+                { data: "name_en" },
+                { data: "created_at" },
                 { data: null },
             ],
             columnDefs: [
-                {
-                    targets: 3,
-                    render: function (data, type, row) {
-                        if (/^</.test(data))
-                            return (
-                                __("Price") + " " + data + " " + __(currency)
-                            );
-                        else return __(data);
-                    },
-                },
-                {
-                    targets: 1,
-                    render: function (data, type, row) {
-                        return `<a class="d-block overlay" style="height:47px;" data-fslightbox="lightbox-basic" href="${getImagePathFromDirectory(
-                            data,
-                            "Cars"
-                        )}">
-                                    <!--begin::Image-->
-                                    <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded"
-                                         style="height:56px;width:100px;border-radius:4px;margin:auto;background-image:url('${getImagePathFromDirectory(
-                                             data,
-                                             "Cars"
-                                         )}');background-size:contain;">
-                                    </div>
-                                    <!--end::Image-->
-
-                                    <!--begin::Action-->
-                                    <div style="width:47px;margin: auto;" class="overlay-layer card-rounded bg-dark bg-opacity-25 shadow">
-                                        <i class="bi bi-eye-fill text-white fs-3x"></i>
-                                    </div>
-                                    <!--end::Action-->
-                                </a>`;
-                    },
-                },
                 {
                     targets: -1,
                     data: null,
@@ -95,7 +58,7 @@ let KTDatatable = (function () {
 
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="/dashboard/cars/${
+                                    <a href="/dashboard/categories/${
                                         row.id
                                     }/edit" class="menu-link px-3 d-flex justify-content-between edit-row" >
                                        <span> ${__("Edit")} </span>
@@ -107,21 +70,9 @@ let KTDatatable = (function () {
 
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="/dashboard/cars/${
+                                    <a href="/dashboard/categories/${
                                         row.id
-                                    }/duplicate" class="menu-link px-3 d-flex justify-content-between edit-row" >
-                                       <span> ${__("Duplicate")} </span>
-                                       <span>  <i class="fa fa-copy text-primary"></i> </span>
-                                    </a>
-
-                                </div>
-                                <!--end::Menu item-->
-
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="/dashboard/cars/${
-                                        row.id
-                                    }" class="menu-link px-3 d-flex justify-content-between" target='_blank' >
+                                    }" class="menu-link px-3 d-flex justify-content-between" >
                                        <span> ${__("Show")} </span>
                                        <span>  <i class="fa fa-eye text-black-50"></i> </span>
                                     </a>
@@ -133,7 +84,7 @@ let KTDatatable = (function () {
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3 d-flex justify-content-between delete-row" data-row-id="${
                                         row.id
-                                    }" data-type="${__("car")}">
+                                    }" data-type="${__("category")}">
                                        <span> ${__("Delete")} </span>
                                        <span>  <i class="fa fa-trash text-danger"></i> </span>
                                     </a>
@@ -154,11 +105,10 @@ let KTDatatable = (function () {
             handleDeleteRows();
             handleFilterDatatable();
             KTMenu.createInstances();
-            $("body").append(`<script src='${lightboxPath}' ></script>`);
         });
     };
 
-    // general search in datatable
+    // Search Datatable
     let handleSearchDatatable = () => {
         $("#general-search-inp").keyup(function () {
             datatable.search($(this).val()).draw();
@@ -181,7 +131,6 @@ let KTDatatable = (function () {
         $(".delete-row").click(function () {
             let rowId = $(this).data("row-id");
             let type = $(this).data("type");
-
             deleteAlert(type).then(function (result) {
                 if (result.value) {
                     loadingAlert(__("deleting now ..."));
@@ -193,7 +142,7 @@ let KTDatatable = (function () {
                                 "content"
                             ),
                         },
-                        url: "/dashboard/cars/" + rowId,
+                        url: "/dashboard/categories/" + rowId,
                         success: () => {
                             setTimeout(() => {
                                 successAlert(
@@ -210,13 +159,7 @@ let KTDatatable = (function () {
                             }, 1000);
                         },
                         error: (err) => {
-                            if (err.hasOwnProperty("responseJSON")) {
-                                if (
-                                    err.responseJSON.hasOwnProperty("message")
-                                ) {
-                                    errorAlert(err.responseJSON.message);
-                                }
-                            }
+                            errorAlert(err.responseJSON.errors["category"]);
                         },
                     });
                 } else if (result.dismiss === "cancel") {
@@ -231,7 +174,6 @@ let KTDatatable = (function () {
         init: function () {
             initDatatable();
             handleSearchDatatable();
-            // handleFilterDatatable();
         },
     };
 })();

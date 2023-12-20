@@ -10,7 +10,6 @@ let KTDatatable = function () {
 
     // Private functions
     let initDatatable = function () {
-
         datatable = $("#kt_datatable").DataTable({
             ordering: false,
             searchDelay: 500,
@@ -23,7 +22,6 @@ let KTDatatable = function () {
                 selector: 'td:first-child',
                 className: 'row-selected'
             },
-
             ajax: {
                 data: function () {
                     let datatable = $('#kt_datatable');

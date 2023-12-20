@@ -15,7 +15,7 @@ class TrashController extends Controller
     public function index($modelName = 'Car')
     {
         $this->authorize('view_recycle_bin');
-
+ 
         if ( request()->ajax() ) {
 
             $model = app('App\\Models\\' . $modelName);

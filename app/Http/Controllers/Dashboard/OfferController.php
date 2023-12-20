@@ -29,7 +29,11 @@ class OfferController extends Controller
     {
         $this->authorize('create_offers');
 
-        $cars = Car::select('id','name_' . getLocale() , 'main_image')->get();
+        $cars = Car::select('id','name_' . getLocale())->get();
+
+        
+        // $cars = Car::select('id','name_' . getLocale() , 'main_image')->get();
+
 
         return view('dashboard.offers.create',compact('cars'));
     }
@@ -39,7 +43,9 @@ class OfferController extends Controller
     {
         $this->authorize('update_offers');
 
-        $cars = Car::select('id','name_' . getLocale() , 'main_image')->get();
+        $cars = Car::select('id','name_' . getLocale() )->get();
+        // $cars = Car::select('id','name_' . getLocale() , 'main_image')->get();
+
 
         return view('dashboard.offers.edit',compact('cars','offer'));
     }

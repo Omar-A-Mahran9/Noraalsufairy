@@ -36,12 +36,12 @@ class ContactUsController extends Controller
 
     public function update(Request $request , $id)
     {
-        $this->authorize('update_contact_us');
+         $this->authorize('update_contact_us');
 
         $contactUsRequest = ContactUs::find($id);
 
         $data = $request->validate(['reply' => 'required|string']);
-
+ 
         $contactUsRequest->update($data);
 
         try {

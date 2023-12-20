@@ -48,7 +48,7 @@
                 <thead>
                     <tr class="text-gray-400 fw-bolder fs-7 text-uppercase gs-0" id="table-header">
                         <th>#</th>
-                        <th>{{ __("image") }}</th>
+                        {{-- <th>{{ __("image") }}</th> --}}
                         <th>{{ getLocale() == 'ar' ? __("arabic name") : __("english name") }}</th>
                         <th>{{ __("price") }}</th>
                         <th>{{ __("Brand") }}</th>
@@ -84,8 +84,7 @@
         // start map containts (html) table header columns
         let tableHeaderColumns = new Map();
         tableHeaderColumns.set('Car', `<th>#</th>
-                    <th>{{ __("image") }}</th>
-                    <th>{{ getLocale() == 'ar' ? __("arabic name") : __("english name") }}</th>
+                     <th>{{ getLocale() == 'ar' ? __("arabic name") : __("english name") }}</th>
                     <th>{{ __("price") }}</th>
                     <th>{{ __("Brand") }}</th>
                     <th class="min-w-100px">{{ __("actions") }}</th>` );
@@ -107,9 +106,8 @@
         let dataTableColumns = new Map();
         dataTableColumns.set('Car', [
                 {data: 'id'},
-                {data: 'main_image'},
-                {data: 'name_' + locale },
-                {data: 'price_field_value'},
+                 {data: 'name_' + locale },
+                {data: 'price'},
                 {data: 'brand.name' , name:'brand_id'},
                 {data: null},
         ]);
@@ -136,31 +134,31 @@
                     targets: 3,
                     render : function (data, type, row) {
                         if(/^</.test(data))
-                            return translate('Price') + " " + data + " " + translate(currency);
+                            return __('Price') + " " + data + " " + __(currency);
                         else
-                            return translate(data);
+                            return __(data);
                     }
                 },
-                {
-                    targets: 1,
-                    render: function (data, type, row) {
+                // {
+                //     targets: 1,
+                //     render: function (data, type, row) {
 
-                        return `<a class="d-block overlay" style="height:47px;" data-fslightbox="lightbox-basic" href="${getImagePathFromDirectory(data, 'Cars')}">
-                                    <!--begin::Image-->
-                                    <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded"
-                                         style="height:56px;width:100px;border-radius:4px;margin:auto;background-image:url('${getImagePathFromDirectory(data, 'Cars')}');background-size:contain;">
-                                    </div>
-                                    <!--end::Image-->
+                //         return `<a class="d-block overlay" style="height:47px;" data-fslightbox="lightbox-basic" href="${getImagePathFromDirectory(data, 'Cars')}">
+                //                     <!--begin::Image-->
+                //                     <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded"
+                //                          style="height:56px;width:100px;border-radius:4px;margin:auto;background-image:url('${getImagePathFromDirectory(data, 'Cars')}');background-size:contain;">
+                //                     </div>
+                //                     <!--end::Image-->
 
-                                    <!--begin::Action-->
-                                    <div style="width:47px;margin: auto;" class="overlay-layer card-rounded bg-dark bg-opacity-25 shadow">
-                                        <i class="bi bi-eye-fill text-white fs-3x"></i>
-                                    </div>
-                                    <!--end::Action-->
-                                </a>`;
+                //                     <!--begin::Action-->
+                //                     <div style="width:47px;margin: auto;" class="overlay-layer card-rounded bg-dark bg-opacity-25 shadow">
+                //                         <i class="bi bi-eye-fill text-white fs-3x"></i>
+                //                     </div>
+                //                     <!--end::Action-->
+                //                 </a>`;
 
-                    }
-                },
+                //     }
+                // },
                 {
                     targets: -1,
                     data: null,
@@ -169,7 +167,7 @@
 
                         return `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
-                                ${translate('Actions')}
+                                ${__('Actions')}
                                 <span class="svg-icon svg-icon-5 m-0">
                                     <i class="fa fa-angle-down mx-1"></i>
                                 </span>
@@ -179,8 +177,8 @@
 
                             ${ canRestore ? `<!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3 d-flex justify-content-between restore-row" data-row-id="${row.id}" data-type="${translate('car')}" >
-                                        <span> ${translate('Restore')} </span>
+                                        <a href="#" class="menu-link px-3 d-flex justify-content-between restore-row" data-row-id="${row.id}" data-type="${__('car')}" >
+                                        <span> ${__('Restore')} </span>
                                         <span>  <i class="fas fa-share text-primary"></i> </span>
                                         </a>
 
@@ -190,8 +188,8 @@
 
                             ${ canDelete ? `<!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 d-flex justify-content-between delete-row" data-row-id="${row.id}" data-type="${translate('car')}">
-                                    <span> ${translate('Delete')} </span>
+                                    <a href="#" class="menu-link px-3 d-flex justify-content-between delete-row" data-row-id="${row.id}" data-type="${__('car')}">
+                                    <span> ${__('Delete')} </span>
                                     <span>  <i class="fa fa-trash text-danger"></i> </span>
                                     </a>
                                 </div>
@@ -210,7 +208,7 @@
                 {
                     targets: 3,
                     render : function (data, type, row) {
-                        if(data) return data + " " + translate(currency);
+                        if(data) return data + " " + __(currency);
                         return "<h1>-</h1>";
                     }
                 },
@@ -223,7 +221,7 @@
                 {
                     targets: 4,
                     render : function (data, type, row) {
-                        return translate( data.replace("_"," ") );
+                        return __( data.replace("_"," ") );
                     }
                 },
                 {
@@ -247,7 +245,7 @@
 
                         return `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
-                                ${translate('Actions')}
+                                ${__('Actions')}
                                 <span class="svg-icon svg-icon-5 m-0">
                                     <i class="fa fa-angle-down mx-1"></i>
                                 </span>
@@ -258,8 +256,8 @@
 
                                 ${ canRestore ? `<!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3 d-flex justify-content-between restore-row" data-row-id="${row.id}" data-type="${translate('order')}" >
-                                        <span> ${translate('Restore')} </span>
+                                        <a href="#" class="menu-link px-3 d-flex justify-content-between restore-row" data-row-id="${row.id}" data-type="${__('order')}" >
+                                        <span> ${__('Restore')} </span>
                                         <span>  <i class="fas fa-share text-primary"></i> </span>
                                         </a>
 
@@ -269,8 +267,8 @@
 
                             ${ canDelete ? `<!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 d-flex justify-content-between delete-row" data-row-id="${row.id}" data-type="${translate('order')}">
-                                    <span> ${translate('Delete')} </span>
+                                    <a href="#" class="menu-link px-3 d-flex justify-content-between delete-row" data-row-id="${row.id}" data-type="${__('order')}">
+                                    <span> ${__('Delete')} </span>
                                     <span>  <i class="fa fa-trash text-danger"></i> </span>
                                     </a>
                                 </div>

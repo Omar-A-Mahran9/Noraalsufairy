@@ -22,7 +22,7 @@ class Category extends Model
 
     public function model()
     {
-        return $this->belongsTo(Model::class);
+        return $this->belongsTo(Model::class, 'model_id');
     }
 
     public function cars()

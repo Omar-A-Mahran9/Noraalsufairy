@@ -15,32 +15,35 @@ class CreateCarsTable extends Migration
     public function up()
     {
         Schema::create('cars', function (Blueprint $table) {
-
+//check vendor and imageeeeeeeeee
             // basic info
             $table->id();
             $table->string('name_ar');
             $table->string('name_en');
-            $table->longText('images');
-
-            $table->foreignId('vendor_id')->references('id')->on('vendors');
+            $table->decimal('price',14);
+            $table->decimal('discount_price',14);
+            $table->boolean('have_discount')->default(0);
+            $table->boolean('is_duplicate')->default(0);
+            $table->string('video_url');
+            // $table->foreignId('vendor_id')->references('id')->nullable()->on('vendors');
             $table->foreignId('city_id')->references('id')->on('cities');
             $table->foreignId('brand_id')->references('id')->on('brands');
             $table->foreignId('model_id')->references('id')->on('models');
-            // $table->foreignId('category_id')->references('id')->on('categories');
+            $table->foreignId('category_id')->references('id')->on('categories');
             $table->foreignId('color_id')->references('id')->on('colors');
-
             $table->unsignedBigInteger('kilometers')->nullable(); // for used cars only
             $table->integer('year');
             $table->enum('gear_shifter', ['manual', 'automatic']);
             $table->enum('supplier', ['gulf', 'saudi']); // gulf or saudi
-            $table->string('fuel_type');
             $table->boolean('is_new')->default(true); // new or used
             $table->text('description_ar');
             $table->text('description_en');
-
-            $table->string('status')->default(CarStatus::pending->value)->comment('App\Enums\CarStatus');
-
+            $table->enum('fuel_type', ['gasoline', 'diesel', 'electric', 'hybrid'])->default('gasoline');           
+             $table->string('status')->default(CarStatus::pending->value)->comment('App\Enums\CarStatus');
             $table->string('rejection_reason')->nullable();
+            $table->boolean('publish')->default(1);
+            $table->boolean('show_in_home_page')->default(1);
+            $table->longText('main_image')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

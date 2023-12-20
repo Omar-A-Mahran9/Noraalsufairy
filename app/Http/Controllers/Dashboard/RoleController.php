@@ -14,6 +14,7 @@ class RoleController extends Controller
         'vendors',
         'brands',
         'models',
+        'categories',
         'colors',
         'cars',
         'roles',
@@ -32,53 +33,49 @@ class RoleController extends Controller
         'news_subscribers',
         'slider_dashboard',
         'recycle_bin',
-        'features',
-        'packages',
-        'delegates',
-        'finance_approvals',
     ];
 
     public function index()
     {
         $this->authorize('view_roles');
 
-        $roles      = Role::with('abilities:id,category,action', 'employees:id')->get();
-        $abilities  = Ability::select('id', 'name', 'category', 'action')->get();
+        $roles      = Role::with('abilities:id,category,action','employees:id')->get();
+        $abilities  = Ability::select('id','name','category','action')->get();
 
-        return view('dashboard.roles.index', ['roles' => $roles, 'abilities' => $abilities, 'modules' => $this->modules]);
+        return view('dashboard.roles.index',[ 'roles' => $roles , 'abilities' => $abilities , 'modules' => $this->modules]);
     }
 
-    public function show(Role $role, Request $request)
+    public function show(Role $role,Request $request)
     {
         $this->authorize('show_roles');
 
-        $role->load('abilities', 'employees:id');
-        $abilities  = Ability::select('id', 'name', 'category', 'action')->get();
+        $role->load('abilities','employees:id');
+        $abilities  = Ability::select('id','name','category','action')->get();
 
-        if (!$request->ajax())
-            return view('dashboard.roles.show', ['role' => $role, 'abilities' => $abilities, 'modules' => $this->modules]);
-        else
-            return response()->json(['name_ar' => $role['name_ar'], 'name_en' => $role['name_en'], 'role_abilities' => $role['abilities']]);
+        if ( ! $request->ajax() )
+            return view('dashboard.roles.show',[ 'role' => $role , 'abilities' => $abilities , 'modules' => $this->modules]);
+         else
+            return response()->json(['name_ar' => $role['name_ar'] , 'name_en' => $role['name_en'] , 'role_abilities' => $role['abilities'] ]);
     }
 
-    public function employees(Role $role, Request $request)
+    public function employees(Role $role,Request $request)
     {
         $role->load('employees:id,name,email,phone,image,created_at');
 
         $employeesCount = $role->employees->count();
 
-        //        if ( $request['search']['value'] ) {
-        //
-        //            $filterArrays = [];
-        //
-        //            foreach ( ['name' , 'phone' , 'email'] as $index => $column)
-        //            {
-        //                $filterArrays[$index] = [$column, 'LIKE', "%" . $request['search']['value'] . "%"];
-        //            }
-        //
-        //            $role->employees->where( $filterArrays );
-        //
-        //        }
+//        if ( $request['search']['value'] ) {
+//
+//            $filterArrays = [];
+//
+//            foreach ( ['name' , 'phone' , 'email'] as $index => $column)
+//            {
+//                $filterArrays[$index] = [$column, 'LIKE', "%" . $request['search']['value'] . "%"];
+//            }
+//
+//            $role->employees->where( $filterArrays );
+//
+//        }
 
 
 
@@ -101,9 +98,9 @@ class RoleController extends Controller
         $this->authorize('create_roles');
 
         $data = $request->validate([
-            "name_ar"   => ['required', 'string', 'max:255', 'unique:roles'],
-            "name_en"   => ['required', 'string', 'max:255', 'unique:roles'],
-            'abilities' => ['required', 'array', 'min:1'],
+            "name_ar"   => ['required', 'string' , 'max:255','unique:roles'],
+            "name_en"   => ['required', 'string' , 'max:255','unique:roles'],
+            'abilities' => ['required', 'array'  , 'min:1'],
         ]);
 
 
@@ -111,6 +108,7 @@ class RoleController extends Controller
         $role = Role::create($data);
 
         $role->abilities()->attach($request['abilities']);
+
     }
 
 
@@ -119,17 +117,21 @@ class RoleController extends Controller
         $this->authorize('update_roles');
 
         $data = $request->validate([
-            "name_ar"   => ['required', 'string', 'max:255', 'unique:roles,id,' . $role['id']],
-            "name_en"   => ['required', 'string', 'max:255', 'unique:roles,id,' . $role['id']],
-            'abilities' => ['required', 'array', 'min:1'],
+            "name_ar"   => ['required', 'string' , 'max:255','unique:roles,id,' . $role['id']],
+            "name_en"   => ['required', 'string' , 'max:255','unique:roles,id,' . $role['id']],
+            'abilities' => ['required', 'array'  , 'min:1'],
         ]);
 
-        if ($role->id == 1) {
+        if ( $role->id == 1 ){
             abort(404);
         }
 
 
         $role->update($data);
         $role->abilities()->sync($request['abilities']);
+
+
     }
+
+
 }
