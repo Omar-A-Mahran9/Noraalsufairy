@@ -2,49 +2,29 @@
 import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
 export default defineNuxtConfig({
-    devtools: { enabled: true },
-    build: {
-        transpile: ["vuetify"],
+  devtools: { enabled: true },
+  build: {
+    transpile: ["vuetify"],
+  },
+  css: ["@/assets/style/main.css"],
+  modules: [
+    "@nuxtjs/i18n",
+    (_options, nuxt) => {
+      nuxt.hooks.hook("vite:extendConfig", (config) => {
+        // @ts-expect-error
+        config.plugins.push(vuetify({ autoImport: true }));
+      });
     },
-    css: ["@/assets/style/main.css"],
-    modules: [
-        "@nuxtjs/i18n",
-        (_options, nuxt) => {
-            nuxt.hooks.hook("vite:extendConfig", (config) => {
-                // @ts-expect-error
-                config.plugins.push(vuetify({ autoImport: true }));
-            });
-        },
-    ],
+  ],
 
-    i18n: {
-        // lazy: true,
-        langDir: "locales",
-        strategy: "prefix_and_default",
-        detectBrowserLanguage: false,
-        locales: [
-            {
-                code: "en",
-                iso: "en",
-                dir: "ltr",
-                name: "english",
-                file: "en.json",
-            },
-            {
-                code: "ar",
-                iso: "ar",
-                dir: "rtl",
-                name: "عربي",
-                file: "ar.json",
-            },
-        ],
-        defaultLocale: "ar",
+  i18n: {
+    vueI18n: "./i18n.config.ts", // if you are using custom path, default
+  },
+  vite: {
+    vue: {
+      template: {
+        transformAssetUrls,
+      },
     },
-    vite: {
-        vue: {
-            template: {
-                transformAssetUrls,
-            },
-        },
-    },
+  },
 });
