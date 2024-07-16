@@ -1,0 +1,29 @@
+@import "@/node_modules/bootstrap/dist/css/bootstrap.css";
+
+@font-face {
+    font-family: 'Janna-Bold';
+    src: url('/fonts/Janna LT Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Janna-Regular';
+    src: url('/fonts/Janna LT Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  *{
+    font-family:'Janna-Regular' ; 
+  }
+ 
+  .main_title {
+    font-family: "Janna-Bold";
+    font-size: 60px;
+    font-weight: 700;
+    line-height: 80px;
+    letter-spacing: 0px;
+    text-align: right;
+    color: white;
+  }

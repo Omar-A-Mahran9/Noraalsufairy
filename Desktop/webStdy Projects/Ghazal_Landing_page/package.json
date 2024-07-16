@@ -1,0 +1,29 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "start": "nuxt start --hostname 0.0.0.0 --port 3000"
+  },
+  "dependencies": {
+    "@mdi/font": "^7.4.47",
+    "bootstrap": "^5.3.3",
+    "jquery": "^3.7.1",
+    "nuxt": "^3.10.3",
+    "nuxt-i18n": "^6.28.1",
+    "popper.js": "^1.16.1",
+    "vue": "^3.4.21",
+    "vue-i18n": "^9.11.0",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge@^8.1.1-28499686.5ce798e",
+    "vite-plugin-vuetify": "^2.0.3",
+    "vuetify": "^3.5.8"
+  }
+}
