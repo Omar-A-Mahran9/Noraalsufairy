@@ -27,3 +27,6 @@ logs
 .DS_Store
 public/.DS_Store
 public/dashboard-assets/.DS_Store
+.DS_Store
+public/.DS_Store
+public/dashboard-assets/.DS_Store
