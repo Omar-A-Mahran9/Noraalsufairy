@@ -5,7 +5,9 @@
 .nitro
 .cache
 dist
-
+.DS_Store
+public/.DS_Store
+public/dashboard-assets/.DS_Store 
 # Node dependencies
 node_modules
 
