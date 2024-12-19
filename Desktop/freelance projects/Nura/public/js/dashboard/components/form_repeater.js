@@ -49,3 +49,29 @@ $("#form_outcome_repeater").repeater({
         $(this).slideUp(deleteElement);
     },
 });
+
+$("#form_repeater_video_material").repeater({
+    initEmpty: false,
+    isFirstItemUndeletable: true,
+    show: function () {
+        $(this).slideDown();
+        $(this).find("input").prop("readonly", false);
+    },
+
+    hide: function (deleteElement) {
+        $(this).slideUp(deleteElement);
+    },
+});
+
+$("#form_repeater_attachment_material").repeater({
+    initEmpty: false,
+    isFirstItemUndeletable: true,
+    show: function () {
+        $(this).slideDown();
+        $(this).find("input").prop("readonly", false);
+    },
+
+    hide: function (deleteElement) {
+        $(this).slideUp(deleteElement);
+    },
+});

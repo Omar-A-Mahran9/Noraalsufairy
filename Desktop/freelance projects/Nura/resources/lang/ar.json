@@ -5,9 +5,10 @@
     "Outcomes": "نتائج الاستفادة من الكورس",
 
     "At least one material option must be selected (video or attachment)": "يجب على الاقل اضافة محاضرات مسجلة أو مرفقات لكل قسم",
+    "Add video material": "اضافة محاضرات مسجلة ",
 
     "Type Video": "نوع الفيديو",
-    "Assign Video to Section": "اضافة محاضرات مسجلة للقسم",
+    "Assign Video to Section": "اضافة محاضرة مسجلة لقسم",
     "Assign to Section": "حدد القسم",
     "Choose the section": "اختر القسم",
     "Type file": "نوع الملف",

@@ -6,6 +6,7 @@ use App\Enums\CoursesStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Employee;
+use App\Models\Section;
 use Auth;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
@@ -46,7 +47,7 @@ class CourseController extends Controller
   
     public function store(Request $request)
     {
-        if ($request->file('images')) {
+         if ($request->file('images')) {
             $data['images'] = uploadImage($request->file('images'), "course");
         }
         
@@ -56,20 +57,19 @@ class CourseController extends Controller
             'description_ar' => $request->description_ar,
             'description_en' => $request->description_en,
             'preview_video_path' => $request->video_url,
-            'discount_price' => $request->discount_price === 'on' ? 1 : 0,
-            'have_discount' => $request->have_discount,
+            'discount_price' => $request->discount_price ,
+            'have_discount' => $request->have_discount=== 'on' ? 1 : 0,
             'price' => $request->price,
             'discount_duration_days_counts' => $request->discount_duration_days_counts,
             'images' => $data['images'] ?? null, // Use uploaded image path or default to null
             'status' => $request->status,
             'from' => $request->from,
             'to' => $request->to,
-            'open' => $request->open,
+            'open' => $request->open?$request->open:1,
             'created_by'=>Auth::user()->id,
             'assign_to'=>$request->assign_to,
         ];
          $course = Course::create($coursedata);
-       
         $sections = $request->sections_list; // Retrieve the sections list from the request
 
         if (is_array($sections) && count($sections) > 0) {
@@ -77,15 +77,16 @@ class CourseController extends Controller
                 // Assuming each section contains a 'name' and 'description'
                 $sectionData = [
                     'course_id'=>$course->id,
-                    'lock'=>1,
-                    'name_ar' => $section['name_ar'] ?? 'Default Name', // Fallback to default if 'name' is not set
+                    'lock'=>$section['lock']=="on" ?1:0,
+                    'name_ar' => $section['lock'] ?? 'Default Name', // Fallback to default if 'name' is not set
                     'name_en' => $section['name_en'] ?? 'Default Name', // Fallback to default if 'name' is not set
                     'description_ar' => $section['description_ar'] ?? 'No description available',
                     'description_en' => $section['description_en'] ?? 'No description available',
                 ];
-        
                 // Example: Save section data to the database
-                // Section::create($sectionData);
+                $section=Section::create($sectionData);
+
+                
             }
         } else {
             // Handle case where sections_list is empty or not an array
@@ -126,20 +127,19 @@ class CourseController extends Controller
             $price         = $request['price'] ?? 0;
 
             $request->validate([
-                'name_ar' => ['required' , 'string','max:255'],
-                'name_en' => ['required' , 'string','max:255'],
-                'images'   => 'required|mimes:webp,png,jpg|max:2048' ,
-                'video_url' => ['required','nullable' , 'string','url'],
-                'price' => 'required | numeric|lte:2147483647|not_in:0|gt:' . $discountPrice,
-                'discount_price' => 'required_with:have_discount|nullable|numeric|not_in:0|lt:' . $price,
-                'discount_duration_days_counts' => 'required_with:have_discount|nullable|numeric',
-                'assign_to' => ['required'],
-                'from' => ['required','date'],
-                'to' => ['required','date'],
-                'description_ar' => ['required' , 'string'],
-                'description_en' => ['required' , 'string'],
-                // 'status' => ['required'],
-     
+                // 'name_ar' => ['required' , 'string','max:255'],
+                // 'name_en' => ['required' , 'string','max:255'],
+                // 'images'   => 'required|mimes:webp,png,jpg|max:2048' ,
+                // 'video_url' => ['required','nullable' , 'string','url'],
+                // 'price' => 'required | numeric|lte:2147483647|not_in:0|gt:' . $discountPrice,
+                // 'discount_price' => 'required_with:have_discount|nullable|numeric|not_in:0|lt:' . $price,
+                // 'discount_duration_days_counts' => 'required_with:have_discount|nullable|numeric',
+                // 'assign_to' => ['required'],
+                // 'from' => ['required','date'],
+                // 'to' => ['required','date'],
+                // 'description_ar' => ['required' , 'string'],
+                // 'description_en' => ['required' , 'string'],
+      
             ]);
 
         }elseif ($request['step'] == 2) {
