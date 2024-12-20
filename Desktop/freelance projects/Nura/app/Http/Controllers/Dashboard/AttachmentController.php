@@ -30,7 +30,7 @@ class AttachmentController extends Controller
         $courses = Course::getApprovedCourses();  // Get approved courses based on global scope
         $section        = Section::select('id','name_' . getLocale())->get();
 
-        return view('dashboard.attachment.create',compact('courses','section'));
+        return view('dashboard.Courses.attachment.create',compact('courses','section'));
     }
 
 
