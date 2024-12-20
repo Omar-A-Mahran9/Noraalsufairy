@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\CarModel;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class SharedController extends Controller
@@ -12,35 +13,20 @@ class SharedController extends Controller
     /** shared means that functions that exist in dashboard and web **/
 
 
-    public function getParentModels(Brand $brand)
-    {
-        $parentModels = $brand->parentModels()->select('id','name_'.getLocale())->get();
+ 
 
+    public function getSection(Course $course)
+    {
+        // Now $course will contain the course model with ID 6 or whatever ID is in the URL
+        $sections = $course->sections()->select('id', 'name_' . app()->getLocale(), 'description_' . app()->getLocale())->get();
+    
         return response()->json([
-            'models' => $parentModels
+            'sections' => $sections
         ]);
     }
+    
 
 
-    public function getModelCategories(CarModel $model)
-    {
-        $categories = $model->categories()->select('id','name_'.getLocale())->get();
-
-        return response()->json([
-            'categories' => $categories
-        ]);
-    }
-
-
-    public function getCategoryCars(Category $category)
-    {
-        $cars = $category->cars()->select('id','name_'.getLocale())->get();
-
-        return response()->json([
-            'cars' => $cars
-        ]);
-    }
-
-    /** shared means that functions that exist in dashboard and web **/
+ 
 
 }

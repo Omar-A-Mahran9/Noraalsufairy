@@ -17,13 +17,13 @@ class BankSeeder extends Seeder
         // Bank::create([
         //     'name_ar' => 'مصر',
         //     'name_en' => 'Masr',
-        //     'image' => 'webstdy_1648022291bmw_car_internal_images_3b.jpg',
+        //     'image' => 'Nura1648022291bmw_car_internal_images_3b.jpg',
         // ]);
 
         // Bank::create([
         //     'name_ar' => 'قطر',
         //     'name_en' => 'QNB',
-        //     'image' => 'webstdy_1648022291bmw_car_internal_images_4.jpg',
+        //     'image' => 'Nura1648022291bmw_car_internal_images_4.jpg',
         // ]);
 
         /*
@@ -39,7 +39,7 @@ class BankSeeder extends Seeder
             [
                 'name_ar' =>  'الاهلى',
                 'name_en' =>  'الاهلى',
-                'image' => 'webstdy_1648022291bmw_car_internal_images_4.jpg',
+                'image' => 'Nura1648022291bmw_car_internal_images_4.jpg',
                 'sectors' => [
                     [
                         'id' => '2',
@@ -73,7 +73,7 @@ class BankSeeder extends Seeder
             [
                 'name_ar' =>  'التجارى وفا',
                 'name_en' =>  'التجارى وفا',
-                'image' => 'webstdy_1648022291bmw_car_internal_images_4.jpg',
+                'image' => 'Nura1648022291bmw_car_internal_images_4.jpg',
                 'sectors' => [
                     [
                         'id' => '2',
@@ -107,7 +107,7 @@ class BankSeeder extends Seeder
             [
                 'name_ar' =>  'HSBC',
                 'name_en' =>  'HSBC',
-                'image' => 'webstdy_1648022291bmw_car_internal_images_4.jpg',
+                'image' => 'Nura1648022291bmw_car_internal_images_4.jpg',
                 'sectors' => [
                     [
                         'id' => '2',
@@ -141,7 +141,7 @@ class BankSeeder extends Seeder
             [
                 'name_ar' =>  'QNB',
                 'name_en' =>  'QNB',
-                'image' => 'webstdy_1648022291bmw_car_internal_images_4.jpg',
+                'image' => 'Nura1648022291bmw_car_internal_images_4.jpg',
                 'sectors' => [
                     [
                         'id' => '2',

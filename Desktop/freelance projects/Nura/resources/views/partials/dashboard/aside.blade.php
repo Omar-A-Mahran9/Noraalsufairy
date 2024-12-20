@@ -142,6 +142,20 @@
                     </div>
                 @endcan
 
+                @can(['view_videos_materials'])
+                    <div class="menu-item">
+                        <a class="menu-link {{ isTabActive('courses') }}" href="{{ route('dashboard.courses.index') }}"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
+                            data-bs-placement="right">
+                            <span class="menu-icon">
+                                <i class="fa fa-book"></i>
+                            </span>
+                            <span class="menu-title"> {{ __('Courses') }}</span>
+                        </a>
+                    </div>
+                @endcan
+
+
                 <!-- end   :: cars section -->
 
 

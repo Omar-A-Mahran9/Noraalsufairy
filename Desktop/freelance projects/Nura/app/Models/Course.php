@@ -25,6 +25,18 @@ class Course extends Model
         }
     }
 
+      // Get courses by status 2 (approved)
+      public static function getApprovedCourses()
+      {
+          $courses = self::where('status', 2)
+              ->select('id', 'name_' . getLocale())  // Dynamic locale column
+              ->get();
+  
+          return $courses;
+      }
+
+
+
     public function getNameAttribute()
     {
         return $this->attributes['name_' . getLocale()];
@@ -32,5 +44,10 @@ class Course extends Model
     public function getDescriptionAttribute()
     {
         return $this->attributes['description_' . getLocale()];
+    }
+
+    public function sections() : \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Section::class)->withCourse();
     }
 }

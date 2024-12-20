@@ -22,9 +22,22 @@ Route::group([ 'prefix' => 'dashboard' , 'namespace' => 'Dashboard', 'as' => 'da
 
     /** resources routes **/
     Route::resource('courses','CourseController');
+    Route::prefix('courses')->group(function () {
+        Route::resource('videos', 'VideosController')->names([
+            'index' => 'courses.videos.index',
+            'create' => 'courses.videos.create',
+            'store' => 'courses.videos.store',
+            'show' => 'courses.videos.show',
+            'edit' => 'courses.videos.edit',
+            'update' => 'courses.videos.update',
+            'destroy' => 'courses.videos.destroy',
+        ]);
+    });
+    
+ 
+    
     Route::post('course-validate/{course?}','CourseController@validateStep');
-    Route::get('/getupdateddata' , 'CourseController@getupdateddata');
-
+ 
     Route::resource('orders','OrderController');
     Route::resource('roles','RoleController');
     Route::resource('brands','BrandController');

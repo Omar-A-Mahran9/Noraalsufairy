@@ -51,7 +51,7 @@ if(!function_exists('uploadImage')){
         $model        = Str::ucfirst($model);
         $path         = "/Images/".$model;
         $originalName =  $request->getClientOriginalName(); // Get file Original Name
-        $imageName    = str_replace(' ','','webstdy_' . time() . $originalName);  // Set Image name
+        $imageName    = str_replace(' ','','Nura_' . time() . $originalName);  // Set Image name
         $request->storeAs($path, $imageName,'public');
         return $imageName;
     }
@@ -75,7 +75,7 @@ if(!function_exists('getImagePathFromDirectory')){
 
     function getImagePathFromDirectory( $imageName , $directory = null , $defaultImage = 'default.jpg'  ): string
     {
-        $imagePath = public_path('/storage/Images/'.'/' . $directory . '/' . $imageName);
+        $imagePath = public_path('public/storage/Images/'.'/' . $directory . '/' . $imageName);
 
         if ( $imageName && $directory && file_exists( $imagePath ) ) // check if the directory is null or the image doesn't exist
             return asset('/storage/Images') .'/' . $directory . '/' . $imageName;

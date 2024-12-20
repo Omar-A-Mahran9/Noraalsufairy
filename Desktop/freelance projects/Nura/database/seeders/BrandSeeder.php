@@ -18,8 +18,8 @@ class BrandSeeder extends Seeder
         Brand::create([
             "name_ar" => "مرسيدس",
             "name_en" => "mercedes",
-            "image" => "webstdy_1647941351trade mark.svg",
-            "cover" => "webstdy_1647941351mercedes-background.jpg",
+            "image" => "Nura1647941351trade mark.svg",
+            "cover" => "Nura1647941351mercedes-background.jpg",
             "meta_keyword_ar" => "مرسيدس",
             "meta_keyword_en" => "mercedes",
             "meta_desc_en" => "mercedes",
@@ -30,8 +30,8 @@ class BrandSeeder extends Seeder
         Brand::create([
             "name_ar" => "بي ام دبليو",
             "name_en" => "BMW",
-            "image" => "webstdy_1647943401bmw_trade_mark.svg",
-            "cover" => "webstdy_1647943401bmw_background.jpg",
+            "image" => "Nura1647943401bmw_trade_mark.svg",
+            "cover" => "Nura1647943401bmw_background.jpg",
             "meta_keyword_ar" => "bmw",
             "meta_keyword_en" => "bmw",
             "meta_desc_en" => "bmw",

@@ -216,6 +216,9 @@ return [
         'meta_desc_ar' => 'وصف مختصر لمحركات البحث بالعربية',
         'meta_desc_en' => 'وصف مختصر لمحركات البحث بالانجليزية',
         'maximum_force' => 'أقصى قوة',
+        'section_id' => 'القسم',
+        'course_id' => 'الكورس',
+
         'determination' => 'العزم',
         'engine_measurement' => 'قياس المحرّك',
         'engine_type' => 'نوع المحرّك',

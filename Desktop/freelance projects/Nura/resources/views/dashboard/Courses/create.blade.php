@@ -320,37 +320,6 @@
                                             </div>
 
                                         </div>
-
-
-
-                                        <!-- begin :: Row -->
-                                        <div class="row mb-10 mt-5">
-
-                                            <!-- begin :: Column -->
-                                            <div class="col-md-6 fv-row">
-
-                                                <label class="fs-5 fw-bold mb-2">{{ __('Description in arabic') }}</label>
-                                                <textarea id="tinymce_description_ar" name="description_ar" class="tinymce"></textarea>
-                                                <p class="text-danger invalid-feedback" id="description_ar"></p>
-
-
-                                            </div>
-                                            <!-- end   :: Column -->
-
-                                            <!-- begin :: Column -->
-                                            <div class="col-md-6 fv-row">
-
-                                                <label
-                                                    class="fs-5 fw-bold mb-2">{{ __('Description in english') }}</label>
-                                                <textarea id="tinymce_description_en" name="description_en" class="tinymce"></textarea>
-                                                <p class="text-danger error-element" id="description_en"></p>
-
-                                            </div>
-                                            <!-- end   :: Column -->
-
-                                        </div>
-
-
                                     </div>
                                     <!-- end   :: Wizard Step 1 -->
 
@@ -418,13 +387,17 @@
                                                                     </div>
                                                                     <div class="col-md-2 mt-3 text-center">
                                                                         <label
-                                                                            class=" mt-1 form-check form-check-sm form-check-custom form-check-solid">
-                                                                            <label
-                                                                                class="form-label fs-3">{{ __('active ?') }}</label>
+                                                                            class="mt-1 form-check form-check-sm form-check-custom form-check-solid">
+                                                                            <span
+                                                                                class="form-label fs-3">{{ __('active ?') }}</span>
+                                                                            <input type="hidden" name="lock"
+                                                                                value="0">
                                                                             <input class="form-check-input ms-3"
-                                                                                type="checkbox" name="lock">
+                                                                                type="checkbox" name="lock"
+                                                                                value="1">
                                                                         </label>
                                                                     </div>
+
                                                                     <div class="col-md-3 ">
                                                                         <a href="javascript:" data-repeater-delete
                                                                             class="btn btn-light-danger mb-4 mt-md-4">
@@ -461,326 +434,33 @@
 
                                     <!-- begin :: Wizard Step 3 -->
                                     <div class="p-8 wizard-step d-none" data-wizard-type="step-content">
+                                        <!-- begin :: Row -->
+                                        <div class="row mb-10 mt-5">
 
-                                        <div class="form-group">
-                                            <div class="d-flex justify-content-center gap-5 mb-10">
-                                                <!-- Videos Material Checkbox -->
-                                                <label>
-                                                    <input type="hidden" name="show_video_material" value="0" />
-                                                    <!-- Default value when unchecked -->
-                                                    <input type="checkbox" id="show-videos-material"
-                                                        name="show_video_material" value="1" />
-                                                    {{ __('Add Videos Material') }}
-                                                </label>
+                                            <!-- begin :: Column -->
+                                            <div class="col-md-6 fv-row">
+
+                                                <label class="fs-5 fw-bold mb-2">{{ __('Description in arabic') }}</label>
+                                                <textarea id="tinymce_description_ar" name="description_ar" class="tinymce"></textarea>
+                                                <p class="text-danger invalid-feedback" id="description_ar"></p>
 
 
-                                                <!-- Attachments Material Checkbox -->
-                                                <label>
-                                                    <input type="hidden" name="show_attachment_material"
-                                                        value="0" /> <!-- Default value when unchecked -->
-                                                    <input type="checkbox" id="show-attachment-material"
-                                                        name="show_attachment_material" value="1" />
-                                                    {{ __('Add attachments Material') }}
-                                                </label>
                                             </div>
+                                            <!-- end   :: Column -->
 
-                                            <p class="invalid-feedback" id="show_video_material"></p>
-                                            <p class="invalid-feedback" id="show_attachment_material"></p>
-                                            <p class="invalid-feedback text-center" id="message"></p>
+                                            <!-- begin :: Column -->
+                                            <div class="col-md-6 fv-row">
+
+                                                <label
+                                                    class="fs-5 fw-bold mb-2">{{ __('Description in english') }}</label>
+                                                <textarea id="tinymce_description_en" name="description_en" class="tinymce"></textarea>
+                                                <p class="text-danger error-element" id="description_en"></p>
+
+                                            </div>
+                                            <!-- end   :: Column -->
 
                                         </div>
-                                        <!--begin::Repeater-->
-                                        <div id="videos_material" class="d-none">
-                                            <div id="form_repeater_video_material">
-                                                <!--begin::Form group-->
-                                                <div class="form-group">
-                                                    <div data-repeater-list="video_material_list">
-                                                        <div
-                                                            class="d-flex  gap-5 justify-content-center align-items-center">
-                                                            <div>
-                                                                <h3 class="text-center font-bold">
-                                                                    {{ __('Add video material') }}
-                                                                </h3>
-                                                            </div>
 
-                                                            <div class="form-group">
-                                                                <a href="javascript:" data-repeater-create
-                                                                    class="btn btn-light-info btn-sm">
-                                                                    <i class="la la-plus"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-
-                                                        <div data-repeater-item>
-                                                            <div class="fv-row row mb-5 ">
-                                                                <div class="col-md-12">
-                                                                    <div
-                                                                        class="d-flex justify-content-between align-items-center">
-                                                                        <h3 class="text-center font-bold">
-                                                                            {{ __('Assign Video to Section') }}
-                                                                        </h3>
-                                                                        <div
-                                                                            class="d-flex gap-5 justify-content-center align-items-center">
-                                                                            <div>
-                                                                                <a href="javascript:" data-repeater-delete
-                                                                                    class="btn btn-light-danger ">
-                                                                                    <i
-                                                                                        class="la la-trash-o"></i>{{ __('Delete') }}
-                                                                                </a>
-                                                                            </div>
-                                                                            <!--begin::Form group-->
-
-                                                                        </div>
-                                                                        <!--end::Form group-->
-                                                                    </div>
-
-                                                                    <hr>
-                                                                    <br>
-                                                                    <div class="row mb-10">
-
-
-                                                                        <div class="col-md-6 fv-row">
-                                                                            <label
-                                                                                class="fs-5 fw-bold mb-2">{{ __('Assign to Section') }}</label>
-                                                                            <div class="form-floating">
-                                                                                <select class="form-select"
-                                                                                    data-control="select2"
-                                                                                    name="section_id_video"
-                                                                                    id="section-select-video"
-                                                                                    data-placeholder="{{ __('Choose the section') }}"
-                                                                                    data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
-                                                                                    <option value="" selected>
-                                                                                        {{ __('Choose the section') }}
-                                                                                    </option>
-                                                                                </select>
-
-                                                                            </div>
-                                                                            <p class="invalid-feedback"
-                                                                                id="section_id_video">
-                                                                            </p>
-                                                                        </div>
-                                                                        <!-- End :: Assign to Section -->
-
-                                                                        <!-- Begin :: Assign Video -->
-                                                                        <div class="col-md-6 fv-row">
-                                                                            <label for="type_video_inp"
-                                                                                class="fs-5 fw-bold mb-2">{{ __('Type Video') }}</label>
-                                                                            <div class="form-floating">
-                                                                                <select class="form-select"
-                                                                                    data-control="select2"
-                                                                                    name="type_video" id="type_video_inp"
-                                                                                    data-placeholder="{{ __('Type Video') }}"
-                                                                                    data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
-                                                                                    <option value="" selected>
-                                                                                    </option>
-                                                                                    @foreach ($videos = ['youtube', 'vimeo'] as $video)
-                                                                                        <option
-                                                                                            value="{{ $video }}">
-                                                                                            {{ __($video) }}
-                                                                                        </option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                            </div>
-                                                                            <p class="invalid-feedback" id="type_video">
-                                                                            </p>
-                                                                        </div>
-                                                                        <!-- End :: Assign Video -->
-                                                                    </div>
-                                                                    <div class="row mb-10">
-                                                                        <!--begin::Repeater-->
-                                                                        <div id="form_repeater_video">
-                                                                            <!--begin::Form group-->
-                                                                            <div class="form-group">
-                                                                                <div data-repeater-list="videos_list">
-
-                                                                                    <div data-repeater-item>
-                                                                                        <div class="form-group row mt-5">
-                                                                                            <div class="col-md-6">
-                                                                                                <label id="video_path_inp"
-                                                                                                    class="form-label">{{ __('Video url') }}</label>
-                                                                                                <input type="text"
-                                                                                                    for="video_path_inp"
-                                                                                                    class="form-control mb-2 mb-md-0"
-                                                                                                    name="video_path"
-                                                                                                    value=""
-                                                                                                    placeholder="{{ __('Enter the video url') }}" />
-                                                                                                <p class="invalid-feedback"
-                                                                                                    id="videos_list_0_video_path">
-                                                                                                </p>
-                                                                                            </div>
-
-                                                                                            <div
-                                                                                                class="col-md-2 text-center">
-                                                                                                <a href="javascript:"
-                                                                                                    data-repeater-delete
-                                                                                                    class="btn btn-light-danger  mt-md-4">
-                                                                                                    <i
-                                                                                                        class="la la-trash-o"></i>{{ __('Delete') }}
-                                                                                                </a>
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <!--end::Form group-->
-
-                                                                            <!--begin::Form group-->
-                                                                            <div class="form-group mt-5">
-                                                                                <a href="javascript:" data-repeater-create
-                                                                                    class="btn btn-light-primary">
-                                                                                    <i
-                                                                                        class="la la-plus"></i>{{ __('Add') }}
-                                                                                </a>
-                                                                            </div>
-                                                                            <!--end::Form group-->
-                                                                        </div>
-                                                                        <!--end::Repeater-->
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                <!--end::Form group-->
-
-
-                                            </div>
-                                        </div>
-
-                                        <!--end::Repeater-->
-
-                                        {{-- <!--begin::Repeater-->
-                                        <div id="form_repeater_attachment_material">
-                                            <!--begin::Form group-->
-                                            <div class="form-group">
-                                                <div data-repeater-list="attachment_material_list">
-
-                                                    <div data-repeater-item>
-
-                                                        <div class="fv-row row mb-5 d-none" id="attachment_material">
-                                                            <div class="col-md-12">
-                                                                <h3 class="text-center font-bold">
-                                                                    {{ __('Assign attachments to Section') }}</h3>
-                                                                <hr>
-                                                                <br>
-                                                                <div class="row mb-10">
-
-
-                                                                    <div class="col-md-6 fv-row">
-                                                                        <label
-                                                                            class="fs-5 fw-bold mb-2">{{ __('Assign to Section') }}</label>
-                                                                        <div class="form-floating">
-                                                                            <select class="form-select"
-                                                                                data-control="select2"
-                                                                                name="section_id_material"
-                                                                                id="section-select-material"
-                                                                                data-placeholder="{{ __('Choose the section') }}"
-                                                                                data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
-                                                                                <option value="" selected>
-                                                                                    {{ __('Choose the section') }}</option>
-                                                                            </select>
-
-                                                                        </div>
-                                                                        <p class="invalid-feedback"
-                                                                            id="section_id_material"></p>
-                                                                    </div>
-                                                                    <!-- End :: Assign to Section -->
-
-                                                                    <!-- Begin :: Assign Video -->
-                                                                    <div class="col-md-6 fv-row">
-                                                                        <label for="type_inp"
-                                                                            class="fs-5 fw-bold mb-2">{{ __('Type file') }}</label>
-                                                                        <div class="form-floating">
-                                                                            <select class="form-select"
-                                                                                data-control="select2"
-                                                                                name="type_material" id="type_inp"
-                                                                                data-placeholder="{{ __('Type file') }}"
-                                                                                data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
-                                                                                <option value="" selected></option>
-                                                                                @foreach ($videos = ['pdf', 'image', 'word'] as $video)
-                                                                                    <option value="{{ $video }}">
-                                                                                        {{ __($video) }}
-                                                                                    </option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </div>
-                                                                        <p class="invalid-feedback" id="type_material">
-                                                                        </p>
-                                                                    </div>
-                                                                    <!-- End :: Assign Video -->
-                                                                </div>
-                                                                <div class="row mb-10">
-                                                                    <!--begin::Repeater-->
-                                                                    <div id="form_file_list">
-                                                                        <!--begin::Form group-->
-                                                                        <div class="form-group">
-                                                                            <div data-repeater-list="file_list">
-
-                                                                                <div data-repeater-item>
-                                                                                    <div class="form-group row mt-5">
-                                                                                        <div class="col-md-6">
-                                                                                            <label class="form-label"
-                                                                                                for="file_path_inp">{{ __('Upload File') }}</label>
-                                                                                            <input type="file"
-                                                                                                class="form-control mb-2 mb-md-0"
-                                                                                                name="file_path"
-                                                                                                id="file_path_inp" />
-                                                                                            <p class="invalid-feedback"
-                                                                                                id="file_list_0_file_path">
-                                                                                            </p>
-                                                                                            <p class="invalid-feedback"
-                                                                                                id="file_list">
-                                                                                            </p>
-                                                                                        </div>
-
-
-                                                                                        <div class="col-md-2 text-center">
-                                                                                            <a href="javascript:"
-                                                                                                data-repeater-delete
-                                                                                                class="btn btn-light-danger mt-5 mt-md-15">
-                                                                                                <i
-                                                                                                    class="la la-trash-o"></i>{{ __('Delete') }}
-                                                                                            </a>
-                                                                                        </div>
-
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <!--end::Form group-->
-
-                                                                        <!--begin::Form group-->
-                                                                        <div class="form-group mt-5">
-                                                                            <a href="javascript:" data-repeater-create
-                                                                                class="btn btn-light-primary">
-                                                                                <i
-                                                                                    class="la la-plus"></i>{{ __('Add') }}
-                                                                            </a>
-                                                                        </div>
-                                                                        <!--end::Form group-->
-                                                                    </div>
-                                                                    <!--end::Repeater-->
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--end::Form group-->
-
-                                            <!--begin::Form group-->
-                                            <div class="form-group mt-5">
-                                                <a href="javascript:" data-repeater-create class="btn btn-light-primary">
-                                                    <i class="la la-plus"></i>{{ __('Add') }}
-                                                </a>
-                                            </div>
-                                            <!--end::Form group-->
-                                        </div>
-                                        <!--end::Repeater--> --}}
                                     </div>
                                     <!-- end   :: Wizard Step 3 -->
 
@@ -904,6 +584,25 @@
     </div>
     <!-- end   :: Card -->
 @endsection
+@push('styles')
+    <style>
+        #active-line {
+            width: 100%;
+            height: 2px;
+            background-color: gray;
+            border: none;
+            display: none;
+        }
+
+        #active-line.active {
+            background-color: black;
+            height: 3px;
+            display: block;
+
+            /* Adjust thickness when active */
+        }
+    </style>
+@endpush
 @push('scripts')
     <!-- Button to move to next step -->
     <button type="button" class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4 step-btn" id="next-btn"
@@ -936,70 +635,25 @@
             $('#next-btn').on('click', function(e) {
 
 
-                if (currentStep === 2) {
 
-                    // Send the AJAX request to get the updated data
-                    $.ajax({
-                        url: '/dashboard/getupdateddata', // Route to your controller method
-                        type: 'GET', // Using GET request since you're fetching data
-                        success: function(response) {
-                            // If the request is successful, handle the response
-                            if (response.success) {
-                                let sections = response.data; // Get the sections data
-
-                                // Clear the dropdown
-                                $('#section-select-video').empty();
-                                $('#section-select-material').empty();
-
-                                // Add a default option
-                                $('#section-select-video').append(
-                                    '<option value="" selected>{{ __('Choose the section') }}</option>'
-                                );
-                                $('#section-select-material').append(
-                                    '<option value="" selected>{{ __('Choose the section') }}</option>'
-                                );
-
-                                // Loop through the sections data and populate the dropdown
-                                $.each(sections, function(index, section) {
-                                    $('#section-select-video').append(
-                                        '<option value="' + index + '">' +
-                                        section.name_ar + '</option>'
-                                    );
-                                    $('#section-select-material').append(
-                                        '<option value="' + index + '">' +
-                                        section.name_ar + '</option>'
-                                    );
-                                });
-
-                                // Reinitialize select2 if necessary
-                                $('#section-select-video').select2({
-                                    placeholder: "{{ __('Choose the section') }}",
-                                    dir: "{{ isArabic() ? 'rtl' : 'ltr' }}"
-                                });
-
-                                // Reinitialize select2 if necessary
-                                $('#section-select-material').select2({
-                                    placeholder: "{{ __('Choose the section') }}",
-                                    dir: "{{ isArabic() ? 'rtl' : 'ltr' }}"
-                                });
-                            } else {
-                                // Handle any errors from the server response
-                                alert('Error: ' + response.message);
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            // Handle any errors during the AJAX request
-                            alert('Something went wrong. Please try again.');
-                        }
-                    });
-                }
             });
         });
+
 
         $(document).ready(function() {
             // Cache DOM elements
             const videosMaterial = $('#videos_material');
             const attachmentMaterial = $('#attachment_material');
+            const hrElement = $('#active-line');
+
+            // Function to check visibility of sections and toggle HR
+            function checkSectionsVisibility() {
+                if (videosMaterial.is(':visible') || attachmentMaterial.is(':visible')) {
+                    hrElement.addClass('active'); // Add active class to HR
+                } else {
+                    hrElement.removeClass('active'); // Remove active class from HR
+                }
+            }
 
             // Event listeners for checkboxes
             $('#show-videos-material').on('change', function() {
@@ -1009,6 +663,8 @@
                 } else {
                     videosMaterial.addClass('d-none'); // Hide videos_material
                 }
+                checkSectionsVisibility(); // Check visibility after toggle
+
             });
 
             $('#show-attachment-material').on('change', function() {
@@ -1019,6 +675,8 @@
                 } else {
                     attachmentMaterial.addClass('d-none'); // Hide attachment_material
                 }
+                checkSectionsVisibility(); // Check visibility after toggle
+
             });
         });
     </script>

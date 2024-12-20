@@ -58,21 +58,11 @@
                         class="form-control form-control-solid w-250px ps-15 border-gray-300 border-1 me-4"
                         id="general-search-inp" placeholder="{{ __('Search ...') }}">
 
-                    <select class="form-select form-select-solid border-gray-300 border-1 filter-datatable-inp"
-                        data-filter-index="4" data-control="select2" data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}"
-                        data-placeholder="{{ __('Choose the brand') }}">
-                        <option value=""></option>
-                        <option value="all" selected>{{ __('All') }}</option>
-                        @foreach ($brands as $brand)
-                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                        @endforeach
-                    </select>
-
                 </div>
                 <!-- end   :: General Search -->
 
                 <!-- begin :: Toolbar -->
-                <div class="d-flex justify-content-end" data-kt-docs-table-toolbar="base">
+                <div class="d-flex justify-content-end gap-5" data-kt-docs-table-toolbar="base">
 
                     <!-- begin :: Add Button -->
                     <a href="{{ route('dashboard.courses.create') }}" class="btn btn-primary" data-bs-toggle="tooltip"
@@ -83,6 +73,32 @@
                         </span>
 
                         {{ __('Add new course') }}
+
+                    </a>
+                    <!-- end   :: Add Button -->
+
+                    <!-- begin :: Add Button -->
+                    <a href="{{ route('dashboard.courses.videos.create') }}" class="btn btn-primary"
+                        data-bs-toggle="tooltip" title="">
+
+                        <span class="svg-icon svg-icon-2">
+                            <i class="fa fa-plus fa-lg"></i>
+                        </span>
+
+                        {{ __('Add new lecture') }}
+
+                    </a>
+                    <!-- end   :: Add Button -->
+
+                    <!-- begin :: Add Button -->
+                    <a href="{{ route('dashboard.courses.create') }}" class="btn btn-primary" data-bs-toggle="tooltip"
+                        title="">
+
+                        <span class="svg-icon svg-icon-2">
+                            <i class="fa fa-plus fa-lg"></i>
+                        </span>
+
+                        {{ __('Add new attachment') }}
 
                     </a>
                     <!-- end   :: Add Button -->
@@ -104,7 +120,6 @@
                         <th>{{ __('image') }}</th>
                         <th>{{ getLocale() == 'ar' ? __('arabic name') : __('english name') }}</th>
                         <th>{{ __('price') }}</th>
-                        <th>{{ __('Brand') }}</th>
                         <th class="min-w-100px">{{ __('actions') }}</th>
                     </tr>
                 </thead>

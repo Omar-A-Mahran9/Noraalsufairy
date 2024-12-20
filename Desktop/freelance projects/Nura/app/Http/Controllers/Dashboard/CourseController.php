@@ -6,6 +6,7 @@ use App\Enums\CoursesStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Employee;
+use App\Models\Outcome;
 use App\Models\Section;
 use Auth;
 use Illuminate\Auth\Events\Validated;
@@ -47,7 +48,7 @@ class CourseController extends Controller
   
     public function store(Request $request)
     {
-         if ($request->file('images')) {
+           if ($request->file('images')) {
             $data['images'] = uploadImage($request->file('images'), "course");
         }
         
@@ -60,7 +61,7 @@ class CourseController extends Controller
             'discount_price' => $request->discount_price ,
             'have_discount' => $request->have_discount=== 'on' ? 1 : 0,
             'price' => $request->price,
-            'discount_duration_days_counts' => $request->discount_duration_days_counts,
+            'discount_duration_days_counts' => $request->discount_duration_days_counts??0,
             'images' => $data['images'] ?? null, // Use uploaded image path or default to null
             'status' => $request->status,
             'from' => $request->from,
@@ -70,20 +71,21 @@ class CourseController extends Controller
             'assign_to'=>$request->assign_to,
         ];
          $course = Course::create($coursedata);
-        $sections = $request->sections_list; // Retrieve the sections list from the request
-
+        $sections = $request->sections_list??[]; // Retrieve the sections list from the request
+         $outcomes=$request->outcome_list??[];
         if (is_array($sections) && count($sections) > 0) {
             foreach ($sections as $section) {
-                // Assuming each section contains a 'name' and 'description'
+                $lock = is_array($section['lock']) ? $section['lock'][0] : (isset($section['lock']) ? $section['lock'] : 0);
+                 // Assuming each section contains a 'name' and 'description'
                 $sectionData = [
                     'course_id'=>$course->id,
-                    'lock'=>$section['lock']=="on" ?1:0,
-                    'name_ar' => $section['lock'] ?? 'Default Name', // Fallback to default if 'name' is not set
+                    'lock'=>$lock,
+                    'name_ar' => $section['name_ar'] ?? 'Default Name', // Fallback to default if 'name' is not set
                     'name_en' => $section['name_en'] ?? 'Default Name', // Fallback to default if 'name' is not set
                     'description_ar' => $section['description_ar'] ?? 'No description available',
                     'description_en' => $section['description_en'] ?? 'No description available',
                 ];
-                // Example: Save section data to the database
+                 // Example: Save section data to the database
                 $section=Section::create($sectionData);
 
                 
@@ -91,6 +93,24 @@ class CourseController extends Controller
         } else {
             // Handle case where sections_list is empty or not an array
             return response()->json(['message' => 'No sections provided.'], 400);
+        }
+
+
+        if (is_array($outcomes) && count($outcomes) > 0) {
+            foreach ($outcomes as $outcome) {
+                // Assuming each section contains a 'name' and 'description'
+                $outcomeData = [
+                    'course_id'=>$course->id,
+                    'description_ar' => $outcome['description_ar'] ?? 'No description available',
+                    'description_en' => $outcome['description_en'] ?? 'No description available',
+                ];
+                // Example: Save section data to the database
+                $outcome=Outcome::create($outcomeData);
+
+            }
+        } else {
+            // Handle case where sections_list is empty or not an array
+            return response()->json(['message' => 'No outcomes provided.'], 400);
         }
 
       }
@@ -127,19 +147,16 @@ class CourseController extends Controller
             $price         = $request['price'] ?? 0;
 
             $request->validate([
-                // 'name_ar' => ['required' , 'string','max:255'],
-                // 'name_en' => ['required' , 'string','max:255'],
-                // 'images'   => 'required|mimes:webp,png,jpg|max:2048' ,
-                // 'video_url' => ['required','nullable' , 'string','url'],
-                // 'price' => 'required | numeric|lte:2147483647|not_in:0|gt:' . $discountPrice,
-                // 'discount_price' => 'required_with:have_discount|nullable|numeric|not_in:0|lt:' . $price,
-                // 'discount_duration_days_counts' => 'required_with:have_discount|nullable|numeric',
-                // 'assign_to' => ['required'],
-                // 'from' => ['required','date'],
-                // 'to' => ['required','date'],
-                // 'description_ar' => ['required' , 'string'],
-                // 'description_en' => ['required' , 'string'],
-      
+                'name_ar' => ['required' , 'string','max:255'],
+                'name_en' => ['required' , 'string','max:255'],
+                 'images'   => 'required|mimes:webp,png,jpg|max:2048' ,
+                 'video_url' => ['required','nullable' , 'string','url'],
+                 'price' => 'required | numeric|lte:2147483647|not_in:0|gt:' . $discountPrice,
+                 'discount_price' => 'required_with:have_discount|nullable|numeric|not_in:0|lt:' . $price,
+                 'discount_duration_days_counts' => 'required_with:have_discount|nullable|numeric',
+                 'assign_to' => ['required'],
+                 'from' => ['required','date'],
+                 'to' => ['required','date'],
             ]);
 
         }elseif ($request['step'] == 2) {
@@ -150,41 +167,13 @@ class CourseController extends Controller
                 'sections_list.*.description_ar'                     => [ 'required' ],
                 'sections_list.*.description_en'                     => [ 'required' ],
             ]);
-            session()->forget('sections');
-            session(['sections' => $request->input('sections_list')]);
+          
         }elseif ($request['step'] == 3) {
-            if ($request->show_video_material == 0 && $request->show_attachment_material == 0) {
-                return $this->validationFailure([
-                    'message' => __('At least one material option must be selected (video or attachment)'),
-                ]);
-            }
-            
-               $request->validate([
-  
-                    // Ensure both fields are boolean
-                    'show_video_material' => ['boolean'],
-                    'show_attachment_material' => ['boolean'],
-                
-                    // Ensure at least one of them is selected
-                    'show_video_material' => ['required_without:show_video_material'],
-                    'show_attachment_material' => ['required_without:show_video_material'],
+            $request->validate([
               
-            
-                // Section and type fields for videos
-                'section_id_video' => ['required_if:show_video_material,1'], // Required if video material is selected
-                'type_video' => ['required_if:show_video_material,1'],
-                'videos_list' => ['required_if:show_video_material,1', 'array'], // Required if video material is selected
-                'videos_list.*.video_path' => [ 'required_if:show_video_material,1'], // URL required if file is not uploaded
-            
-                // Section and type fields for attachments
-                'section_id_material' => ['required_if:show_attachment_material,1'], // Required if attachment material is selected
-                'type_material' => ['required_if:show_attachment_material,1'],
-                // Validation for file list
-                'file_list' => ['required_if:show_attachment_material,1', 'array'], // Required if attachment material is selected
-                'file_list_*_file_path' => [
-                   'required'
-                ], // URL required if file is not uploaded
-                
+                 'description_ar' => ['required' , 'string'],
+                 'description_en' => ['required' , 'string'],
+      
             ]);
 
         }elseif ($request['step'] == 4) {
@@ -241,15 +230,19 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
-    {
-        //
-    }
+ 
+        public function destroy(Request $request , Course $course)
+        {
+            $this->authorize('delete_courses');
+    
+            if ($request->ajax())
+            {
+                $course->delete();
+             }
+    
+        }
+     
 
-    public function getupdateddata(){
-        $section =session('sections')??[];
-        return response()->json([
-            'success' => true,
-            'data' => $section // Send the sections data back to the frontend
-        ]);    }
+ 
+   
 }

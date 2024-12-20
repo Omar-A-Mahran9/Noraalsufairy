@@ -7,9 +7,8 @@ use App\Http\Controllers\SharedController;
 Route::controller(SharedController::class)->group(function (){
 
     /** ajax routes **/
-    Route::get('get-brand-parent-models/{brand}','getParentModels')->middleware('web','set_locale');
-    Route::get('get-model-categories/{model}','getModelCategories')->middleware('web','set_locale');
-    Route::get('get-category-cars/{category}','getCategoryCars')->middleware('web','set_locale');
-    /** ajax routes **/
+    Route::get('get-course-parent-section/{course}', 'getSection')->middleware('web','set_locale');
+
+     /** ajax routes **/
 
 });
