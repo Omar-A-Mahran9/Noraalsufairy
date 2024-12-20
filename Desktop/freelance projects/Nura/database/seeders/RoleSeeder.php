@@ -23,7 +23,7 @@ class RoleSeeder extends Seeder
             'vendors',
             'courses',
             'videos_materials',
-
+            'attachment_materials',
             'brands',
             'models',
             'colors',

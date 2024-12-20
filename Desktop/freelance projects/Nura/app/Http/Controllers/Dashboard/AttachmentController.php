@@ -24,8 +24,13 @@ class AttachmentController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create_attachment_materials');
+        $courses = Course::getApprovedCourses();  // Get approved courses based on global scope
+        $section        = Section::select('id','name_' . getLocale())->get();
+
+        return view('dashboard.Courses.videos.create',compact('courses','section'));
     }
+
 
     /**
      * Store a newly created resource in storage.
