@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\StoreAttachmentRequest;
+use App\Models\Attachmnet;
 use App\Models\Course;
 use App\Models\Section;
+use Arr;
 use Illuminate\Http\Request;
 
 class AttachmentController extends Controller
@@ -40,9 +43,18 @@ class AttachmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAttachmentRequest $request)
     {
-        //
+ 
+        $this->authorize('create_attachment_materials');
+        $data = $request->validated();
+        if ($request->file('file_path'))
+        {
+            deleteFile( $data['file_path'] , "Attachments");
+            $data['image'] = uploadFile( $request->file('file_path') , "Attachments");
+        }     
+        $dataWithoutCourseId = Arr::except($data, ['course_id']);
+        Attachmnet::create($dataWithoutCourseId);
     }
 
     /**

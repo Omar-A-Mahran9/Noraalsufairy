@@ -218,6 +218,7 @@ return [
         'maximum_force' => 'أقصى قوة',
         'section_id' => 'القسم',
         'course_id' => 'الكورس',
+        'file_path' => 'رابط الملف',
 
         'determination' => 'العزم',
         'engine_measurement' => 'قياس المحرّك',

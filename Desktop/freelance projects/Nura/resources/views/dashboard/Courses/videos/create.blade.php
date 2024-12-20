@@ -41,7 +41,7 @@
         <div class="card-body p-0">
             <!-- begin :: Form -->
             <form action="{{ route('dashboard.courses.videos.store') }}" class="form" method="post" id="submitted-form"
-                data-redirection-url="{{ route('dashboard.courses.index') }}">
+                data-redirection-url="{{ route('dashboard.courses.videos.index') }}">
                 @csrf
                 <!-- begin :: Card header -->
                 <div class="card-header d-flex align-items-center">

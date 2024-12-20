@@ -11,7 +11,7 @@
 
                 <!-- begin :: Title -->
                 <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1"><a
-                        href="{{ route('dashboard.courses.videos.index') }}"
+                        href="{{ route('dashboard.courses.attachment.index') }}"
                         class="text-muted text-hover-primary">{{ __('content') }}</a></h1>
                 <!-- end   :: Title -->
 
@@ -23,7 +23,7 @@
                 <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
                     <!-- begin :: Item -->
                     <li class="breadcrumb-item text-muted">
-                        {{ __('Add new lecture') }}
+                        {{ __('Add new attachment') }}
                     </li>
                     <!-- end   :: Item -->
                 </ul>
@@ -40,12 +40,12 @@
         <!-- begin :: Card body -->
         <div class="card-body p-0">
             <!-- begin :: Form -->
-            <form action="{{ route('dashboard.courses.videos.store') }}" class="form" method="post" id="submitted-form"
-                data-redirection-url="{{ route('dashboard.courses.index') }}">
+            <form action="{{ route('dashboard.courses.attachment.store') }}" class="form" method="post"
+                id="submitted-form" data-redirection-url="{{ route('dashboard.courses.index') }}">
                 @csrf
                 <!-- begin :: Card header -->
                 <div class="card-header d-flex align-items-center">
-                    <h3 class="fw-bolder text-dark">{{ __('Add new lecture') }}</h3>
+                    <h3 class="fw-bolder text-dark">{{ __('Add new attachment') }}</h3>
                 </div>
                 <!-- end   :: Card header -->
 
@@ -87,24 +87,24 @@
                         </div>
 
                         <div class="col-md-4 fv-row">
-                            <label class="fs-5 fw-bold mb-2">{{ __('Video Type') }}</label>
-                            <select class="form-select" data-control="select2" name="type" id="video_type"
-                                data-placeholder="{{ __('Choose video type') }}"
+                            <label class="fs-5 fw-bold mb-2">{{ __('File Type') }}</label>
+                            <select class="form-select" data-control="select2" name="type" id="file_type"
+                                data-placeholder="{{ __('Choose file type') }}"
                                 data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
                                 <option value="">
+                                    {{ __('Choose file type') }}
+                                </option>
+                                <option value="pdf">
+                                    {{ __('file') }}
+                                </option>
+                                <option value="image">
+                                    {{ __('Image') }}
+                                </option>
 
-                                </option>
-                                <option value="youtube">
-                                    YouTube
-                                </option>
-                                <option value="vimeo">
-                                    Vimeo
-                                </option>
                             </select>
-                            <p class="invalid-feedback" id="type">
-
-                            </p>
+                            <p class="invalid-feedback" id="type"></p>
                         </div>
+
 
 
                     </div>
@@ -145,10 +145,11 @@
                         <!-- Begin :: Col -->
                         <div class="col-md-4 fv-row">
 
-                            <label class="form-label">{{ __('Video Path') }}</label>
-                            <input type="text" class="form-control" name="video_path" value="" id="video_path_inp"
-                                placeholder="{{ __('Add video material') }}">
-                            <p class="invalid-feedback" id="video_path"></p>
+                            <label class="form-label">{{ __('file') }}</label>
+                            <input placeholder="example" type="file" class="form-control" name="file_path"
+                                id="file_path_inp">
+
+                            <p class="invalid-feedback" id="file_path"></p>
 
                         </div>
                         <!-- End   :: Col -->

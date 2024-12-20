@@ -57,6 +57,33 @@ if(!function_exists('uploadImage')){
     }
 }
 
+if (!function_exists('uploadFile')) {
+
+    function uploadFile($request, $model = '', $folder = 'Files')
+    {
+        // Normalize model name
+        $model = Str::plural($model);
+        $model = Str::ucfirst($model);
+
+        // Define storage path
+        $path = "/$folder/" . $model;
+
+        // Get file original name and extension
+        $originalName = $request->getClientOriginalName();
+        $extension = $request->getClientOriginalExtension();
+
+        // Generate unique file name
+        $fileName = str_replace(' ', '', 'Nura_' . time() . '.' . $extension);
+
+        // Store the file
+        $request->storeAs($path, $fileName, 'public');
+
+        // Return the file path or name as needed
+        return $fileName;
+    }
+}
+
+
 
 if(!function_exists('deleteImage')){
 
@@ -66,6 +93,23 @@ if(!function_exists('deleteImage')){
 
         if ($imageName != 'default.png'){
             $path = "/Images/" . $model . '/' .$imageName;
+            Storage::disk('public')->delete($path);
+        }
+    }
+}
+if (!function_exists('deleteFile')) {
+
+    function deleteFile($fileName, $model = '', $folder = 'Files')
+    {
+        // Normalize model name
+        $model = Str::plural($model);
+        $model = Str::ucfirst($model);
+
+        // Define the file path
+        $path = "/$folder/" . $model . '/' . $fileName;
+
+        // Check and delete the file
+        if ($fileName && Storage::disk('public')->exists($path)) {
             Storage::disk('public')->delete($path);
         }
     }
