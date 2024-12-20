@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
+use App\Models\Section;
 use Illuminate\Http\Request;
 
 class AttachmentController extends Controller
@@ -28,7 +30,7 @@ class AttachmentController extends Controller
         $courses = Course::getApprovedCourses();  // Get approved courses based on global scope
         $section        = Section::select('id','name_' . getLocale())->get();
 
-        return view('dashboard.Courses.videos.create',compact('courses','section'));
+        return view('dashboard.attachment.create',compact('courses','section'));
     }
 
 
