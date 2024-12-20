@@ -32,14 +32,14 @@ Route::group([ 'prefix' => 'dashboard' , 'namespace' => 'Dashboard', 'as' => 'da
             'update' => 'courses.videos.update',
             'destroy' => 'courses.videos.destroy',
         ]);
-        Route::resource('attachment', 'VideosController')->names([
-            'index' => 'courses.videos.index',
-            'create' => 'courses.videos.create',
-            'store' => 'courses.videos.store',
-            'show' => 'courses.videos.show',
-            'edit' => 'courses.videos.edit',
-            'update' => 'courses.videos.update',
-            'destroy' => 'courses.videos.destroy',
+        Route::resource('attachment', 'AttachmentController')->names([
+            'index' => 'courses.attachment.index',
+            'create' => 'courses.attachment.create',
+            'store' => 'courses.attachment.store',
+            'show' => 'courses.attachment.show',
+            'edit' => 'courses.attachment.edit',
+            'update' => 'courses.attachment.update',
+            'destroy' => 'courses.attachment.destroy',
         ]);
     });
     
