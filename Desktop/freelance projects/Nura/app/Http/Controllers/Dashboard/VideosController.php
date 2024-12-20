@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\StoreVideoRequest;
 use App\Models\Course;
 use App\Models\Section;
+use App\Models\Video;
+use Arr;
 use Illuminate\Http\Request;
 
 class VideosController extends Controller
@@ -42,8 +44,10 @@ class VideosController extends Controller
      */
     public function store(StoreVideoRequest $request)
     {
-    $data=$request;
-    video
+        $this->authorize('create_videos_materials');
+        $data = $request->validated();
+        $dataWithoutCourseId = Arr::except($data, ['course_id']);
+        Video::create($dataWithoutCourseId);
     }
 
     /**
