@@ -91,8 +91,8 @@
                     <!-- end   :: Add Button -->
 
                     <!-- begin :: Add Button -->
-                    <a href="{{ route('dashboard.courses.create') }}" class="btn btn-primary" data-bs-toggle="tooltip"
-                        title="">
+                    <a href="{{ route('dashboard.courses.attachment.create') }}" class="btn btn-primary"
+                        data-bs-toggle="tooltip" title="">
 
                         <span class="svg-icon svg-icon-2">
                             <i class="fa fa-plus fa-lg"></i>
