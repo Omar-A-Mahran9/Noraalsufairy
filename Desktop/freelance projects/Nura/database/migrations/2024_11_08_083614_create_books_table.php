@@ -19,8 +19,11 @@ class CreateBooksTable extends Migration
             $table->string('title_en');
             $table->longText('description_ar');
             $table->longText('description_en');
+            $table->longText('pdf_path');
             $table->string('main_image');
             $table->string('price');
+            $table->integer('stock');
+
             $table->timestamps();
         });
     }
