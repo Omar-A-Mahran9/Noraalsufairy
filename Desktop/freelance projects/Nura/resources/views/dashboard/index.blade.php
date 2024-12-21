@@ -49,7 +49,7 @@
 
     <!--begin::Entry-->
     @can('view_reports')
-    <div class="d-flex flex-column-fluid" >
+    {{-- <div class="d-flex flex-column-fluid" >
         <!--begin::Container-->
         <div class="container">
             <!--begin::Dashboard-->
@@ -111,7 +111,7 @@
                         <!--end::Body-->
                     </div>
                     <!--end::Statistics Widget 3-->
-                </div> --}}
+                </div>
             </div>
             <!--end::Row-->
 
@@ -167,7 +167,7 @@
             <!--end::Dashboard-->
         </div>
         <!--end::Container-->
-    </div>
+    </div> --}}
     @endcan
     <!--end::Entry-->
 

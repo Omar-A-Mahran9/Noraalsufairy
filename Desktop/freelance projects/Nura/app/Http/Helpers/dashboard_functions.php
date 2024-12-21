@@ -374,7 +374,7 @@ if(!function_exists('pushNotification')) {
     {
         /* add notification to first Employee */
         $date = Carbon::now()->diffForHumans();
-        $notification = new NewNotification($titleAr, $titleEn, $descriptionAr, $descriptionEn, $date, $icon, $color, $url);
+        // $notification = new NewNotification($titleAr, $titleEn, $descriptionAr, $descriptionEn, $date, $icon, $color, $url);
         $admin = Employee::first();
         $admin->notify($notification);
 
