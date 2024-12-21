@@ -27,6 +27,8 @@ class StoreAttachmentRequest extends FormRequest
         return [
             'name_ar'         => 'required|string|max:255' ,
             'name_en'         => 'required|string|max:255' ,
+            'description_ar'    => 'required | string',
+            'description_en'    => 'required | string',
             'course_id'       => 'required',
             'section_id'       => 'required',
             'file_path' => 'required|mimes:jpg,jpeg,png,gif,mp4,mov,avi,pdf,docx',

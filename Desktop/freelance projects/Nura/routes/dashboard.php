@@ -22,6 +22,7 @@ Route::group([ 'prefix' => 'dashboard' , 'namespace' => 'Dashboard', 'as' => 'da
 
     /** resources routes **/
     Route::resource('courses','CourseController');
+    Route::post('course-validate/{course?}','CourseController@validateStep');
     Route::prefix('courses')->group(function () {
         Route::resource('videos', 'VideosController')->names([
             'index' => 'courses.videos.index',
@@ -42,11 +43,9 @@ Route::group([ 'prefix' => 'dashboard' , 'namespace' => 'Dashboard', 'as' => 'da
             'destroy' => 'courses.attachment.destroy',
         ]);
     });
-    
- 
-    
-    Route::post('course-validate/{course?}','CourseController@validateStep');
- 
+    Route::resource('books', 'BookController');
+    Route::resource('articles', 'ArticlesController');
+
     Route::resource('orders','OrderController');
     Route::resource('roles','RoleController');
     Route::resource('brands','BrandController');

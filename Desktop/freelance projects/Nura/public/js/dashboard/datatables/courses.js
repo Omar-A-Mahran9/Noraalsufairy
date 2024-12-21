@@ -81,7 +81,7 @@ let KTDatatable = (function () {
                                         row.id
                                     }/edit" class="menu-link px-3 d-flex justify-content-between edit-row" >
                                        <span> ${__("Edit")} </span>
-                                       <span>  <i class="fa fa-edit text-primary"></i> </span>
+                                       <span>  <i class="fa fa-edit"></i> </span>
                                     </a>
 
                                 </div>

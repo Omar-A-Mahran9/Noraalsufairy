@@ -41,94 +41,42 @@
             <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
                 id="#kt_aside_menu" data-kt-menu="true" data-kt-menu-expand="false">
 
-                @canany(['view_brands', 'view_models', 'view_colors', 'view_tags', 'view_cars'])
-                    <!-- begin :: cars section -->
+                @can('view_employees')
                     <div class="menu-item">
-                        <div class="menu-content pt-8 pb-0">
-                            <span class="menu-section text-muted text-uppercase fs-8 ls-1">{{ __('Cars') }}</span>
-                        </div>
-                    </div>
-                @endcanany
-
-
-                @can('view_brands')
-                    <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('brands') }}" href="{{ route('dashboard.brands.index') }}"
+                        <a class="menu-link {{ isTabActive('employees') }}" href="{{ route('dashboard.employees.index') }}"
                             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
                             data-bs-placement="right">
                             <span class="menu-icon">
-                                <i class="fa fa-list"></i>
+                                <i class="fa fa-user-shield"></i>
                             </span>
-                            <span class="menu-title"> {{ __('Brands') }}</span>
+                            <span class="menu-title"> {{ __('Admins') }}</span>
                         </a>
                     </div>
                 @endcan
 
-                @can('view_models')
+                @can('view_books')
                     <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('models', 'parent') }}"
-                            href="{{ route('dashboard.models.index', ['type' => 'parent']) }}" data-bs-toggle="tooltip"
-                            data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <a class="menu-link {{ isTabActive('books') }}" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                            href="{{ route('dashboard.books.index') }}" data-bs-dismiss="click" data-bs-placement="right">
                             <span class="menu-icon">
-                                <i class="fa fa-hashtag"></i>
+                                <i class="fa fa-book"></i>
                             </span>
-                            <span class="menu-title"> {{ __('Models') }}</span>
+                            <span class="menu-title"> {{ __('Books') }}</span>
                         </a>
                     </div>
                 @endcan
-
-                @can('view_models')
+                @can('view_articles')
                     <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('models', 'sub') }}"
-                            href="{{ route('dashboard.models.index', ['type' => 'sub']) }}" data-bs-toggle="tooltip"
-                            data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
-                            <span class="menu-icon">
-                                <i class="fa fa-hashtag"></i>
-                            </span>
-                            <span class="menu-title"> {{ __('Sub Models') }}</span>
-                        </a>
-                    </div>
-                @endcan
-
-                @can('view_colors')
-                    <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('colors') }}" href="{{ route('dashboard.colors.index') }}"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
+                        <a class="menu-link {{ isTabActive('articles') }}" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                            href="{{ route('dashboard.articles.index') }}" data-bs-dismiss="click"
                             data-bs-placement="right">
                             <span class="menu-icon">
-                                <i class="fa fa-palette"></i>
+                                <i class="fas fa-file-alt"></i>
                             </span>
-                            <span class="menu-title"> {{ __('Colors') }}</span>
+                            <span class="menu-title"> {{ __('Articles') }}</span>
                         </a>
                     </div>
                 @endcan
-
-                @can('view_tags')
-                    <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('tags') }}" href="{{ route('dashboard.tags.index') }}"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
-                            data-bs-placement="right">
-                            <span class="menu-icon">
-                                <i class="fa fa-tag"></i>
-                            </span>
-                            <span class="menu-title"> {{ __('Tags') }}</span>
-                        </a>
-                    </div>
-                @endcan
-
-                @can('view_cars')
-                    <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('cars') }}" href="{{ route('dashboard.cars.index') }}"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
-                            data-bs-placement="right">
-                            <span class="menu-icon">
-                                <i class="fa fa-car"></i>
-                            </span>
-                            <span class="menu-title"> {{ __('Cars') }}</span>
-                        </a>
-                    </div>
-                @endcan
-
                 @can(['view_courses'])
                     <div class="menu-item">
                         <a class="menu-link {{ isTabActive('courses') }}" href="{{ route('dashboard.courses.index') }}"
@@ -142,18 +90,6 @@
                     </div>
                 @endcan
 
-                @can(['view_videos_materials'])
-                    <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('courses') }}" href="{{ route('dashboard.courses.index') }}"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
-                            data-bs-placement="right">
-                            <span class="menu-icon">
-                                <i class="fa fa-book"></i>
-                            </span>
-                            <span class="menu-title"> {{ __('Courses') }}</span>
-                        </a>
-                    </div>
-                @endcan
 
 
                 <!-- end   :: cars section -->

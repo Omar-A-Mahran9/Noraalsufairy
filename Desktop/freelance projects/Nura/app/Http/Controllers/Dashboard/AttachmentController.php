@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\StoreAttachmentRequest;
+use App\Models\Attachment;
 use App\Models\Attachmnet;
 use App\Models\Course;
 use App\Models\Section;
@@ -51,10 +52,10 @@ class AttachmentController extends Controller
         if ($request->file('file_path'))
         {
             deleteFile( $data['file_path'] , "Attachments");
-            $data['image'] = uploadFile( $request->file('file_path') , "Attachments");
+            $data['file_path'] = uploadFile( $request->file('file_path') , "Attachments");
         }     
         $dataWithoutCourseId = Arr::except($data, ['course_id']);
-        Attachmnet::create($dataWithoutCourseId);
+        Attachment::create($dataWithoutCourseId);
     }
 
     /**

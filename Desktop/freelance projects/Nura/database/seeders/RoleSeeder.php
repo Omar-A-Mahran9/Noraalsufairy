@@ -24,6 +24,8 @@ class RoleSeeder extends Seeder
             'courses',
             'videos_materials',
             'attachment_materials',
+            'books', 
+            'articles',
             'brands',
             'models',
             'colors',

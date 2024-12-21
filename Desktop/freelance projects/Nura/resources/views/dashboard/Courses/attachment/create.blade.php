@@ -156,6 +156,33 @@
 
                     </div>
 
+                    <!-- begin :: Row -->
+                    <div class="row mb-10">
+
+                        <!-- begin :: Column -->
+                        <div class="col-md-6 fv-row">
+
+                            <label class="fs-5 fw-bold mb-2">{{ __('Description in arabic') }}</label>
+                            <textarea name="description_ar" class="form-select"></textarea>
+                            <p class="text-danger invalid-feedback" id="description_ar"></p>
+
+
+                        </div>
+                        <!-- end   :: Column -->
+
+                        <!-- begin :: Column -->
+                        <div class="col-md-6 fv-row">
+
+                            <label class="fs-5 fw-bold mb-2">{{ __('Description in english') }}</label>
+                            <textarea name="description_en" class="form-select"></textarea>
+                            <p class="text-danger error-element" id="description_en"></p>
+
+                        </div>
+                        <!-- end   :: Column -->
+
+                    </div>
+                    <!-- begin :: Row -->
+
 
 
 
