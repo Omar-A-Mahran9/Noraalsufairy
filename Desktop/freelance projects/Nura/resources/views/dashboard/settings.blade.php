@@ -129,7 +129,7 @@
                 <div class="fv-row row mb-15">
 
                     <!-- Begin :: Col -->
-                    <div class="col-md-6">
+                    <div class="col-md-3">
 
                         <label class="form-label">{{ __('Facebook') }}</label>
                         <input type="text" class="form-control" name="facebook_url"
@@ -141,7 +141,7 @@
                     <!-- End   :: Col -->
 
                     <!-- Begin :: Col -->
-                    <div class="col-md-6">
+                    <div class="col-md-3">
 
                         <label class="form-label">{{ __('Twitter') }}</label>
                         <input type="text" class="form-control" name="twitter_url"
@@ -151,15 +151,8 @@
 
                     </div>
                     <!-- End   :: Col -->
-
-                </div>
-                <!-- End   :: Input group -->
-
-                <!-- Begin :: Input group -->
-                <div class="fv-row row mb-15">
-
                     <!-- Begin :: Col -->
-                    <div class="col-md-6">
+                    <div class="col-md-3">
 
                         <label class="form-label">{{ __('Instagram') }}</label>
                         <input type="text" class="form-control" name="instagram_url"
@@ -171,7 +164,7 @@
                     <!-- End   :: Col -->
 
                     <!-- Begin :: Col -->
-                    <div class="col-md-6">
+                    <div class="col-md-3">
 
                         <label class="form-label">{{ __('Youtube') }}</label>
                         <input type="text" class="form-control" name="youtube_url"
@@ -182,14 +175,16 @@
                     </div>
                     <!-- End   :: Col -->
 
+
                 </div>
                 <!-- End   :: Input group -->
+
 
                 <!-- Begin :: Input group -->
                 <div class="fv-row row mb-15">
 
                     <!-- Begin :: Col -->
-                    <div class="col-md-6">
+                    <div class="col-md-3">
 
                         <label class="form-label">{{ __('Snapchat') }}</label>
                         <input type="text" class="form-control" name="snapchat_url"
@@ -201,7 +196,7 @@
                     <!-- End   :: Col -->
 
                     <!-- Begin :: Col -->
-                    <div class="col-md-6">
+                    <div class="col-md-3">
 
                         <label class="form-label">{{ __('Email') }}</label>
                         <input type="text" class="form-control" name="email"
@@ -211,15 +206,8 @@
 
                     </div>
                     <!-- End   :: Col -->
-
-                </div>
-                <!-- End   :: Input group -->
-
-                <!-- Begin :: Input group -->
-                <div class="fv-row row mb-15">
-
                     <!-- Begin :: Col -->
-                    <div class="col-md-6">
+                    <div class="col-md-3">
 
                         <label class="form-label">{{ __('Phone') }}</label>
                         <input type="text" class="form-control" name="phone"
@@ -231,7 +219,7 @@
                     <!-- End   :: Col -->
 
                     <!-- Begin :: Col -->
-                    <div class="col-md-6">
+                    <div class="col-md-3">
 
                         <label class="form-label">{{ __('Whatsapp') }}</label>
                         <input type="text" class="form-control" name="whatsapp"
@@ -241,8 +229,28 @@
 
                     </div>
                     <!-- End   :: Col -->
-
                 </div>
+                <!-- End   :: Input group -->
+
+
+                <div class="fv-row row mb-15">
+
+                    <!-- Begin :: Col -->
+                    <div class="col-md-3">
+
+                        <label class="form-label">{{ __('logo') }}</label>
+                        <br>
+                        <input type="file" class="d-none" accept="image/*" name="logo" id="logo-uploader">
+                        <button class="btn btn-secondary w-100 image-upload-inp" type="button"> <i
+                                class="bi bi-upload fs-8"></i>
+                            {{ settings()->getSettings('logo') ?: __('no file is selected') }}
+                        </button>
+                        <p class="invalid-feedback" id="logo"></p>
+
+
+                    </div>
+                </div>
+                <!-- End   :: Col -->
 
 
             </div>
@@ -289,7 +297,7 @@
                 <div class="fv-row row mb-15">
 
                     <!-- Begin :: Col -->
-                    <div class="col-md-6">
+                    <div class="col-md-3">
 
                         <label class="form-label">{{ __('Meta tag description in arabic') }}</label>
                         <textarea class="form-control form-control form-control" name="meta_tag_description_ar"
@@ -300,7 +308,7 @@
                     <!-- End   :: Col -->
 
                     <!-- Begin :: Col -->
-                    <div class="col-md-6">
+                    <div class="col-md-3">
 
                         <label class="form-label">{{ __('Meta tag description in english') }}</label>
                         <textarea class="form-control form-control form-control" name="meta_tag_description_en"
@@ -317,7 +325,7 @@
                 <div class="fv-row row mb-15">
 
                     <!-- Begin :: Col -->
-                    <div class="col-md-6">
+                    <div class="col-md-3">
 
                         <label class="form-label">{{ __('Meta tag keywords in arabic') }}</label>
                         <input type="text" class="" id="meta_tag_keyword_ar_inp" name="meta_tag_keyword_ar"
@@ -329,7 +337,7 @@
                     <!-- End   :: Col -->
 
                     <!-- Begin :: Col -->
-                    <div class="col-md-6">
+                    <div class="col-md-3">
 
                         <label class="form-label">{{ __('Meta tag keywords in english') }}</label>
                         <input type="text" class="" id="meta_tag_keyword_en_inp" name="meta_tag_keyword_en"

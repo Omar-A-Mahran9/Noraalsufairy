@@ -6,8 +6,11 @@
     <div class="aside-logo flex-column-auto" id="kt_aside_logo">
         <!--begin::Logo-->
         <a href="{{ route('dashboard.index') }}">
-            <img alt="Logo" src="{{ getImagePathFromDirectory(settings()->get('logo'), 'Settings') }}"
-                class="h-35px logo" />
+            {{-- <img alt="Logo" src="{{ getImagePathFromDirectory(settings()->get('logo'), 'Settings') }}"
+                class="h-35px logo" /> --}}
+
+            <img src="{{ asset('images/logo.png') }}" alt="White Logo" style="filter: brightness(0) invert(1);">
+
         </a>
         <!--end::Logo-->
         <!--begin::Aside toggler-->
