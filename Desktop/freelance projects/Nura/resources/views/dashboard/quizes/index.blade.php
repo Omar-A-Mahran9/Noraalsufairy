@@ -64,8 +64,8 @@
 
 
                     <!-- begin :: Add Button -->
-                    <a href="{{ route('dashboard.quizzes.questions.create') }}" class="btn btn-primary"
-                        data-bs-toggle="tooltip" title="">
+                    <a href="{{ route('dashboard.quizzes.questions.create', ['type' => 'single']) }}"
+                        class="btn btn-primary" data-bs-toggle="tooltip" title="">
 
                         <span class="svg-icon svg-icon-2">
                             <i class="fa fa-plus fa-lg"></i>
@@ -77,7 +77,7 @@
                     <!-- end   :: Add Button -->
 
                     <!-- begin :: Add Button -->
-                    <a href="{{ route('quizzes.questions.create', ['type' => 'text']) }}" class="btn btn-primary"
+                    <a href="{{ route('dashboard.quizzes.questions.create', ['type' => 'text']) }}" class="btn btn-primary"
                         data-bs-toggle="tooltip" title="">
 
                         <span class="svg-icon svg-icon-2">
@@ -88,9 +88,9 @@
 
                     </a>
                     <!-- end   :: Add Button -->
-                    {{-- <!-- begin :: Add Button -->
-                    <a href="{{ route('dashboard.quizzes.questions.create') }}" class="btn btn-primary"
-                        data-bs-toggle="tooltip" title="">
+                    <!-- begin :: Add Button -->
+                    <a href="{{ route('dashboard.quizzes.questions.create', ['type' => 'multiple']) }}"
+                        class="btn btn-primary" data-bs-toggle="tooltip" title="">
 
                         <span class="svg-icon svg-icon-2">
                             <i class="fa fa-plus fa-lg"></i>
@@ -99,8 +99,8 @@
                         {{ __('Add multiple Question') }}
 
                     </a>
-                    <!-- end   :: Add Button --> --}}
-{{-- 
+                    <!-- end   :: Add Button -->
+
                     <!-- begin :: Add Button -->
                     <a href="{{ route('dashboard.quizzes.create') }}" class="btn btn-primary" data-bs-toggle="tooltip"
                         title="">
@@ -112,7 +112,7 @@
                         {{ __('Add new Quiz') }}
 
                     </a>
-                    <!-- end   :: Add Button --> --}}
+                    <!-- end   :: Add Button -->
 
 
                 </div>

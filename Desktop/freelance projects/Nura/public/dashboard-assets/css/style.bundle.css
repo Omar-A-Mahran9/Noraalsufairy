@@ -25773,15 +25773,15 @@ fieldset:disabled .btn {
 }
 .text-active-primary.active {
     transition: color 0.2s ease, background-color 0.2s ease;
-    color: #ffffff !important;
+    color: #0f2819 !important;
 }
 .text-active-primary.active i {
     transition: color 0.2s ease, background-color 0.2s ease;
-    color: #ffffff !important;
+    color: #0f2819 !important;
 }
 .text-active-primary.active .svg-icon svg [fill]:not(.permanent):not(g) {
     transition: fill 0.3s ease;
-    fill: #ffffff;
+    fill: #0f2819;
 }
 .text-active-primary.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
     transition: fill 0.3s ease;

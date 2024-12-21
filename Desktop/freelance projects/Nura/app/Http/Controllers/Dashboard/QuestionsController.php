@@ -24,11 +24,13 @@ class QuestionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $this->authorize('view_questions');
         $quizzes        = Quiz::select('id','name_' . getLocale())->get();
-        return view('dashboard.quizes.questions.create',compact('quizzes'));
+        $type = $request->query('type', 'single'); // Default to 'default' if not set
+
+        return view('dashboard.quizes.questions.create',compact('quizzes','type'));
     }
 
     /**

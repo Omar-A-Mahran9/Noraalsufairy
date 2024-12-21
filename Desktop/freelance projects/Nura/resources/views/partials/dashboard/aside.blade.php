@@ -184,73 +184,6 @@
                     </div>
                 @endcan --}}
 
-                <!-- end   :: vendors section -->
-
-
-                @canany(['view_careers', 'view_news', 'view_faq', 'view_services', 'view_offers'])
-                    <div class="menu-item">
-                        <div class="menu-content pt-8 pb-0">
-                            <span class="menu-section text-muted text-uppercase fs-8 ls-1">{{ __('Website') }}</span>
-                        </div>
-                    </div>
-                @endcanany
-
-                @can('view_careers')
-                    <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('careers') }}" href="{{ route('dashboard.careers.index') }}"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
-                            data-bs-placement="right">
-                            <span class="menu-icon">
-                                <i class="fa fa-briefcase"></i>
-                            </span>
-                            <span class="menu-title"> {{ __('Careers') }}</span>
-                        </a>
-                    </div>
-                @endcan
-
-
-                @can('view_news')
-                    <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('news') }}" href="{{ route('dashboard.news.index') }}"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
-                            data-bs-placement="right">
-                            <span class="menu-icon">
-                                <i class="fa fa-newspaper"></i>
-                            </span>
-                            <span class="menu-title"> {{ __('News') }}</span>
-                        </a>
-                    </div>
-                @endcan
-
-
-                @can('view_faq')
-                    <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('faqs') }}" href="{{ route('dashboard.faqs.index') }}"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
-                            data-bs-placement="right">
-                            <span class="menu-icon">
-                                <i class="fa fa-question-circle"></i>
-                            </span>
-                            <span class="menu-title"> {{ __('FAQ') }}</span>
-                        </a>
-                    </div>
-                @endcan
-
-
-                @can('view_offers')
-                    <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('offers') }}" href="{{ route('dashboard.offers.index') }}"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
-                            data-bs-placement="right">
-                            <span class="menu-icon">
-                                <i class="fa fa-gifts"></i>
-                            </span>
-                            <span class="menu-title"> {{ __('Offers') }}</span>
-                        </a>
-                    </div>
-                @endcan
-
-
                 @canany(['view_cities', 'view_branches', 'view_banks', 'view_roles', 'view_employees', 'view_settings'])
                     <div class="menu-item">
                         <div class="menu-content pt-8 pb-0">
@@ -259,45 +192,6 @@
                     </div>
                 @endcanany
 
-
-                @can('view_cities')
-                    <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('cities') }}" href="{{ route('dashboard.cities.index') }}"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
-                            data-bs-placement="right">
-                            <span class="menu-icon">
-                                <i class="fa fa-city"></i>
-                            </span>
-                            <span class="menu-title"> {{ __('Cities') }}</span>
-                        </a>
-                    </div>
-                @endcan
-
-                @can('view_branches')
-                    <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('branches') }}"
-                            href="{{ route('dashboard.branches.index') }}" data-bs-toggle="tooltip"
-                            data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
-                            <span class="menu-icon">
-                                <i class="fa fa-building"></i>
-                            </span>
-                            <span class="menu-title"> {{ __('Branches') }}</span>
-                        </a>
-                    </div>
-                @endcan
-
-                @can('view_banks')
-                    <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('banks') }}" href="{{ route('dashboard.banks.index') }}"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
-                            data-bs-placement="right">
-                            <span class="menu-icon">
-                                <i class="bi bi-bank"></i>
-                            </span>
-                            <span class="menu-title"> {{ __('Banks') }}</span>
-                        </a>
-                    </div>
-                @endcan
 
                 @can('view_roles')
                     <div class="menu-item">
@@ -312,19 +206,6 @@
                     </div>
                 @endcan
 
-                @can('view_employees')
-                    <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('employees') }}"
-                            href="{{ route('dashboard.employees.index') }}" data-bs-toggle="tooltip"
-                            data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
-                            <span class="menu-icon">
-                                <i class="fa fa-user-shield"></i>
-                            </span>
-                            <span class="menu-title"> {{ __('Employees') }}</span>
-                        </a>
-                    </div>
-                @endcan
-
                 @can('view_settings')
                     <div class="menu-item">
                         <a class="menu-link {{ isTabActive('settings') }}"
@@ -334,19 +215,6 @@
                                 <i class="bi bi-gear-fill"></i>
                             </span>
                             <span class="menu-title"> {{ __('Settings') }}</span>
-                        </a>
-                    </div>
-                @endcan
-
-                @can('view_recycle_bin')
-                    <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('trash') }}" href="{{ route('dashboard.trash') }}"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
-                            data-bs-placement="right">
-                            <span class="menu-icon">
-                                <i class="fas fa-trash"></i>
-                            </span>
-                            <span class="menu-title"> {{ __('Recycle Bin') }}</span>
                         </a>
                     </div>
                 @endcan
