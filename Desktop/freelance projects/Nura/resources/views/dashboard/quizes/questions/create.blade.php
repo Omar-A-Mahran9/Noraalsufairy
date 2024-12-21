@@ -78,7 +78,7 @@
                     <div class="row mb-10">
 
                         <!-- begin :: Column -->
-                        <div class="col-md-4 fv-row">
+                        <div class="col-md-6 fv-row">
 
                             <label class="fs-5 fw-bold mb-2">{{ __('Question in arabic') }}</label>
                             <div class="form-floating">
@@ -89,7 +89,7 @@
                             <p class="invalid-feedback" id="name_ar"></p>
                         </div>
                         <!-- begin :: Column -->
-                        <div class="col-md-4 fv-row">
+                        <div class="col-md-6 fv-row">
 
                             <label class="fs-5 fw-bold mb-2">{{ __('Question in english') }}</label>
                             <div class="form-floating">
@@ -107,6 +107,76 @@
 
                 </div>
                 <!-- end   :: Inputs wrapper -->
+                <!-- Begin :: Input group -->
+                <div class="row mx-8">
+                    <hr>
+                    <!-- Begin :: Col -->
+                    <div class="col-md-12 mt-3">
+                        <!--end::Form group-->
+                        <!--begin::Repeater-->
+                        <div id="answer_repeater">
+                            <div class="d-flex justify-content-between">
+                                <h3 class="text-center font-bold">{{ __('Answers') }}</h3>
+                                <!--begin::Form group-->
+
+                                <div class="form-group">
+                                    <a href="javascript:" data-repeater-create class="btn btn-light-primary">
+                                        <i class="la la-plus"></i>{{ __('Add new Choose') }}
+                                    </a>
+                                </div>
+                            </div>
+                            <!--begin::Form group-->
+                            <div class="form-group">
+                                <div data-repeater-list="answer_list">
+
+                                    <div data-repeater-item>
+                                        <div class="form-group row mt-5 mb-10 align-items-center">
+                                            <div class="col-md-3">
+                                                <label
+                                                    class="form-label sections_list">{{ __('Answer in arabic') }}</label>
+                                                <input type="text" class="form-control mb-2 mb-md-0" name="name_ar"
+                                                    value="" placeholder="{{ __('Enter answer in arabic') }}" />
+                                                <p class="invalid-feedback" id="sections_list_0_name_ar"></p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="form-label">{{ __('Answer in english') }}</label>
+                                                <input type="text" class="form-control mb-2 mb-md-0" name="name_en"
+                                                    value="" placeholder="{{ __('Enter answer in english') }}" />
+                                                <p class="invalid-feedback" id="sections_list_0_name_en"></p>
+                                            </div>
+
+                                            <div class="col-md-2 mt-5 text-center">
+                                                <label
+                                                    class="mt-1 form-check form-check-sm form-check-custom form-check-solid">
+                                                    <span class="form-label fs-3">{{ __('correct answer') }}</span>
+                                                    <input type="hidden" name="lock" value="0">
+                                                    <input class="form-check-input ms-3" type="checkbox" name="lock"
+                                                        value="1">
+                                                </label>
+                                            </div>
+
+                                            <div class="col-md-3 ">
+                                                <a href="javascript:" data-repeater-delete
+                                                    class="btn btn-light-danger mt-5 mt-md-5">
+                                                    <i class="la la-trash-o"></i>{{ __('Delete') }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Form group-->
+
+
+                        </div>
+                        <!--end::Repeater-->
+
+                    </div>
+                    <!-- End   :: Col -->
+
+                </div>
+                <!-- End   :: Input group -->
+
 
                 <!-- begin :: Form footer -->
                 <div class="form-footer">
@@ -135,4 +205,6 @@
 @endsection
 @push('scripts')
     <script src="{{ asset('js/dashboard/forms/course/common.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
+    <script src="{{ asset('js/dashboard/components/form_repeater.js') }}"></script>
 @endpush

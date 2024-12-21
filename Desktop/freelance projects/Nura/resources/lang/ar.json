@@ -13,6 +13,9 @@
     "Question in arabic": "السؤال بالعربية",
     "Question in english": "السؤال بالانجليزي",
     "Enter the Question": "أدخل السؤال",
+    "Answers": "الاختيارات",
+    "correct answer": "الاجابة الصحيحة",
+    "Add new Choose": "اضافة اختيار جديد",
 
     "Sections": "الأقسام",
     "content": "محتويات الكورس",
@@ -41,6 +44,10 @@
     "more images": "صور اضافية",
     "stock": "الكمية",
     "Enter the stock": "ادخل الكمية",
+    "Answer in arabic": "الاجابة بالعربية",
+    "Answer in english": "الاجابة بالانجليزية",
+    "Enter answer in english": "اضف الاجابة بالأنجليزية",
+    "Enter answer in arabic": "اضف الاجابة بالعربية",
 
     "books list": "قائمة الكتب",
     "Add new book": "اضافة كتاب جديد",

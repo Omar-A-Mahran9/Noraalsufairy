@@ -46,7 +46,7 @@ Route::group([ 'prefix' => 'dashboard' , 'namespace' => 'Dashboard', 'as' => 'da
     Route::resource('books', 'BookController');
     Route::resource('articles', 'ArticlesController');
     Route::resource('quizzes','QuizzeController');
-    Route::prefix('quizzes')->group(function () {
+    Route::prefix('quizzes/{quiz}')->group(function () {
         Route::resource('questions', 'QuestionsController')->names([
             'index' => 'quizzes.questions.index',
             'create' => 'quizzes.questions.create',
