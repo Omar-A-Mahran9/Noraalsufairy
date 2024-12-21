@@ -25,9 +25,9 @@ class Book extends Model
         return $this->attributes['description_' . getLocale()];
     }
 
-    // public function images()
-    // {
-    //     return $this->belongsToMany(BookImage::class, 'book_image_book');
-    // }
+    public function bookImages()
+    {
+        return $this->hasMany(BookImage::class);
+    }
 }
 

@@ -21,6 +21,11 @@
     "Books": "الكتب",
     "books": "الكتب",
     "book": "الكتاب",
+    "Enter the book title": "ادخل عنوان الكتاب ",
+    "more images": "صور اضافية",
+    "stock": "الكمية",
+    "Enter the stock": "ادخل الكمية",
+
     "books list": "قائمة الكتب",
     "Add new book": "اضافة كتاب جديد",
     "Edit book": "تعديل الكتاب",

@@ -117,7 +117,6 @@
 
                     </div>
 
-
                     <!-- begin :: Row -->
                     <div class="row mb-10">
 
@@ -145,6 +144,38 @@
                     </div>
 
 
+                    <div class="row mb-10">
+
+                        <div class="col-md-4 fv-row">
+
+                            <label class="form-label">{{ __('book') }}</label>
+                            <input placeholder="example" type="file" class="form-control" name="pdf_path"
+                                id="pdf_path_inp">
+
+                            <p class="invalid-feedback" id="pdf_path"></p>
+
+                        </div>
+                        <div class="col-md-4 fv-row">
+
+                            <label class="fs-5 fw-bold mb-2">{{ __('stock') }}</label>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="stock_inp" name="stock"
+                                    placeholder="example" />
+                                <label for="stock_inp">{{ __('Enter the stock') }}</label>
+                            </div>
+                            <p class="invalid-feedback" id="stock"></p>
+
+
+                        </div>
+                        <div class="col-md-4 fv-row">
+                            <label class="form-label">{{ __('more images') }}</label>
+                            <input multiple type="file" class="form-control" name="images[]" id="image_path_inp">
+                            <p class="invalid-feedback" id="images"></p>
+                            <div id="image_preview" style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End   :: Col -->
 
                 </div>
                 <!-- end   :: Inputs wrapper -->
@@ -175,4 +206,34 @@
     </div>
 @endsection
 @push('scripts')
+    <script>
+        const fileInput = document.getElementById('image_path_inp');
+        const imagePreview = document.getElementById('image_preview');
+
+        fileInput.addEventListener('change', function() {
+            imagePreview.innerHTML = ''; // Clear previous previews
+            const files = fileInput.files;
+            if (files.length > 0) {
+                Array.from(files).forEach(file => {
+                    if (file.type.startsWith('image/')) { // Check if file is an image
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            // Create an image element
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.style.width = '100px';
+                            img.style.height = '100px';
+                            img.style.objectFit = 'cover'; // Maintain aspect ratio and fill the box
+                            img.style.border = '1px solid #ddd';
+                            img.style.borderRadius = '5px';
+
+                            // Append the image to the preview container
+                            imagePreview.appendChild(img);
+                        };
+                        reader.readAsDataURL(file); // Read the file as a data URL
+                    }
+                });
+            }
+        });
+    </script>
 @endpush

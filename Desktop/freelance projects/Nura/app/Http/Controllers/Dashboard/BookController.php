@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\StoreBooksRequest;
 use App\Http\Requests\Dashboard\UpdateBooksRequest;
 use App\Models\Book;
+use App\Models\BookImage;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -49,14 +50,38 @@ class BookController extends Controller
      */
     public function store(StoreBooksRequest $request)
     {
-         $this->authorize('create_books');
-        $data=$request->validated();
-        if ($request->file('main_image'))
-        $data['main_image'] = uploadImage( $request->file('main_image') , "books");
 
-        Book::create($data);
-
+        // Authorize the user to create books
+        $this->authorize('create_books');
+        
+        // Get the validated data
+        $data = $request->validated();
+        unset($data['images']);
+        // Handle the main image upload
+        if ($request->file('main_image')) {
+            $data['main_image'] = uploadImage($request->file('main_image'), "books");
+        }
+    
+        // Create the book record
+        $book = Book::create($data);
+    
+        // Handle additional images (more_images)
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                // Upload each image
+                $imagePath = uploadImage($file, "books/images");
+    
+                // Create a BookImage record
+                BookImage::create([
+                    'book_id' => $book->id,  // Associate image with the created book
+                    'image' => $imagePath,    // Store the image path
+                ]);
+            }
+        }
+    
+        
     }
+    
 
     /**
      * Display the specified resource.
