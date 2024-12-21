@@ -604,13 +604,6 @@
     </style>
 @endpush
 @push('scripts')
-    <!-- Button to move to next step -->
-    <button type="button" class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4 step-btn" id="next-btn"
-        data-btn-type="next">
-        Next
-    </button>
-
-
     <script src="{{ asset('dashboard-assets/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
     <script src="{{ asset('js/dashboard/components/form_repeater.js') }}"></script>
 

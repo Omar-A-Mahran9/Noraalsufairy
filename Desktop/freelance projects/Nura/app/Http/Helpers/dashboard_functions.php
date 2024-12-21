@@ -6,8 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Webstdy\Notification\NewNotification;
-
+ 
 if ( !function_exists('isRtl') ) {
 
     function isArabic() : bool
