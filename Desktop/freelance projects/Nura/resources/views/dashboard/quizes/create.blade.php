@@ -11,8 +11,8 @@
 
                 <!-- begin :: Title -->
                 <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1"><a
-                        href="{{ route('dashboard.books.index') }}"
-                        class="text-muted text-hover-primary">{{ __('Books') }}</a></h1>
+                        href="{{ route('dashboard.quizzes.index') }}"
+                        class="text-muted text-hover-primary">{{ __('quizzes') }}</a></h1>
                 <!-- end   :: Title -->
 
                 <!-- begin :: Separator -->
@@ -23,7 +23,7 @@
                 <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
                     <!-- begin :: Item -->
                     <li class="breadcrumb-item text-muted">
-                        {{ __('Add new book') }}
+                        {{ __('Add new Quiz') }}
                     </li>
                     <!-- end   :: Item -->
                 </ul>
@@ -40,40 +40,28 @@
         <!-- begin :: Card body -->
         <div class="card-body p-0">
             <!-- begin :: Form -->
-            <form action="{{ route('dashboard.books.store') }}" class="form" method="post" id="submitted-form"
-                data-redirection-url="{{ route('dashboard.books.index') }}">
+            <form action="{{ route('dashboard.quizzes.store') }}" class="form" method="post" id="submitted-form"
+                data-redirection-url="{{ route('dashboard.quizzes.index') }}">
                 @csrf
                 <!-- begin :: Card header -->
-                <div class="card-header d-flex align-items-center">
-                    <h3 class="fw-bolder text-dark">{{ __('Add new book') }}</h3>
+                <div class="card-header d-flex  justify-content-between align-items-center">
+                    <div>
+                        <h3 class="fw-bolder text-dark">{{ __('Add new Quiz') }}</h3>
+
+                    </div>
+                    <div class="pe-5 ">
+                        <div class="form-check form-switch">
+                            <label for="openCourseSwitch">{{ __('Open Quiz') }}</label>
+                            <input class="form-check-input" type="checkbox" id="openCourseSwitch" name="open"
+                                value="1">
+                        </div>
+                    </div>
                 </div>
                 <!-- end   :: Card header -->
 
                 <!-- begin :: Inputs wrapper -->
                 <div class="inputs-wrapper">
-                    <!-- begin :: Row -->
-                    <div class="row mb-10">
-
-                        <!-- begin :: Column -->
-                        <div class="col-md-12 fv-row d-flex justify-content-evenly">
-
-                            <div class="d-flex flex-column align-items-center">
-                                <!-- begin :: Upload image component -->
-                                <label class="text-center fw-bold mb-4">{{ __('Image') }}</label>
-                                <div>
-                                    <x-dashboard.upload-image-inp name="main_image" :image="null" :directory="null"
-                                        placeholder="default.jpg" type="editable"></x-dashboard.upload-image-inp>
-                                </div>
-                                <p class="invalid-feedback" id="main_image"></p>
-                                <!-- end   :: Upload image component -->
-                            </div>
-
-
-                        </div>
-                        <!-- end   :: Column -->
-
-                    </div>
-                    <!-- end   :: Row -->
+        
 
                     <div class="row mb-8">
 
@@ -82,41 +70,88 @@
 
                             <label class="fs-5 fw-bold mb-2">{{ __('Title in arabic') }}</label>
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="title_ar_inp" name="title_ar"
+                                <input type="text" class="form-control" id="name_ar_inp" name="name_ar"
                                     placeholder="example" />
-                                <label for="title_ar_inp">{{ __('Enter the book title') }}</label>
+                                <label for="name_ar_inp">{{ __('Enter the quiz title') }}</label>
                             </div>
-                            <p class="invalid-feedback" id="title_ar"></p>
+                            <p class="invalid-feedback" id="name_ar"></p>
                         </div>
                         <!-- begin :: Column -->
                         <div class="col-md-4 fv-row">
 
                             <label class="fs-5 fw-bold mb-2">{{ __('Title in english') }}</label>
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="title_en_inp" name="title_en"
+                                <input type="text" class="form-control" id="name_en_inp" name="name_en"
                                     placeholder="example" />
-                                <label for="title_en_inp">{{ __('Enter the book title') }}</label>
+                                <label for="name_en_inp">{{ __('Enter the quiz title') }}</label>
                             </div>
-                            <p class="invalid-feedback" id="title_en"></p>
+                            <p class="invalid-feedback" id="name_en"></p>
 
 
                         </div>
 
+                        <!-- end   :: Column -->
                         <div class="col-md-4 fv-row">
 
-                            <label class="fs-5 fw-bold mb-2">{{ __('Price') }}</label>
+                            <label class="fs-5 fw-bold mb-2">{{ __('duration (by minuts)') }}</label>
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="price_inp" name="price"
+                                <input type="number" min="1" class="form-control" id="duration_inp" name="duration"
                                     placeholder="example" />
-                                <label for="price_inp">{{ __('Enter the book price') }}</label>
+                                <label for="duration_inp">{{ __('Enter the quiz duration') }}</label>
                             </div>
-                            <p class="invalid-feedback" id="price"></p>
+                            <p class="invalid-feedback" id="duration"></p>
 
 
                         </div>
+                        <!-- end   :: Column -->
+
+
 
                     </div>
+                    <div class="row mb-10 align-items-center">
+                        <div class="col-md-3 fv-row">
+                            <label class="fs-5 fw-bold mb-2" for="from_inp">{{ __('Date quiz from') }}</label>
+                            <input type='date' name="from" id="from_inp"
+                                class="form-control form-control-solid   datepicker border-gray-300 border-1 filter-datatable-inp me-4"
+                                placeholder="{{ __('Choose the date') }}" data-filter-index="6" />
+                            <p class="invalid-feedback" id="from"></p>
+                        </div>
+                        <div class="col-md-3 fv-row">
+                            <label for="to_inp" class="fs-5 fw-bold mb-2">{{ __('Date quiz to') }}</label>
+                            <input id="to_inp" type='date' name="to"
+                                class="form-control form-control-solid   border-gray-300 border-1 filter-datatable-inp me-4"
+                                placeholder="{{ __('Choose the date') }}" data-filter-index="6" />
+                            <p class="invalid-feedback" id="to"></p>
+                        </div>
+                        <!-- begin :: Column -->
+                        <div class="col-md-3 fv-row">
 
+                            <label class="fs-5 fw-bold mb-2">{{ __('Courses') }}</label>
+                            <select class="form-select" data-control="select2" name="course_id" id="course_inp"
+                                data-placeholder="{{ __('Choose the Course') }}"
+                                data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
+                                <option value="" selected></option>
+                                @foreach ($courses as $course)
+                                    <option value="{{ $course->id }}"> {{ $course->name }} </option>
+                                @endforeach
+                            </select>
+                            <p class="invalid-feedback" id="course_id"></p>
+
+
+                        </div>
+                        <!-- end   :: Column -->
+                        <div class="col-md-3 fv-row">
+
+                            <label class="fs-5 fw-bold mb-2">{{ __('Sections') }}</label>
+                            <select class="form-select" data-control="select2" name="section_id" id="section_inp"
+                                data-placeholder="{{ __('Choose the section') }}"
+                                data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
+                                <option value="" selected></option>
+                            </select>
+                            <p class="invalid-feedback" id="section_id"></p>
+
+                        </div>
+                    </div>
                     <!-- begin :: Row -->
                     <div class="row mb-10">
 
@@ -142,40 +177,6 @@
                         <!-- end   :: Column -->
 
                     </div>
-
-
-                    <div class="row mb-10">
-
-                        <div class="col-md-4 fv-row">
-
-                            <label class="form-label">{{ __('book') }}</label>
-                            <input placeholder="example" type="file" class="form-control" name="pdf_path"
-                                id="pdf_path_inp">
-
-                            <p class="invalid-feedback" id="pdf_path"></p>
-
-                        </div>
-                        <div class="col-md-4 fv-row">
-
-                            <label class="fs-5 fw-bold mb-2">{{ __('stock') }}</label>
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="stock_inp" name="stock"
-                                    placeholder="example" />
-                                <label for="stock_inp">{{ __('Enter the stock') }}</label>
-                            </div>
-                            <p class="invalid-feedback" id="stock"></p>
-
-
-                        </div>
-                        <div class="col-md-4 fv-row">
-                            <label class="form-label">{{ __('more images') }}</label>
-                            <input multiple type="file" class="form-control" name="images[]" id="image_path_inp">
-                            <p class="invalid-feedback" id="images"></p>
-                            <div id="image_preview" style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End   :: Col -->
 
                 </div>
                 <!-- end   :: Inputs wrapper -->
@@ -206,34 +207,5 @@
     </div>
 @endsection
 @push('scripts')
-    <script>
-        const fileInput = document.getElementById('image_path_inp');
-        const imagePreview = document.getElementById('image_preview');
-
-        fileInput.addEventListener('change', function() {
-            imagePreview.innerHTML = ''; // Clear previous previews
-            const files = fileInput.files;
-            if (files.length > 0) {
-                Array.from(files).forEach(file => {
-                    if (file.type.startsWith('image/')) { // Check if file is an image
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            // Create an image element
-                            const img = document.createElement('img');
-                            img.src = e.target.result;
-                            img.style.width = '100px';
-                            img.style.height = '100px';
-                            img.style.objectFit = 'cover'; // Maintain aspect ratio and fill the box
-                            img.style.border = '1px solid #ddd';
-                            img.style.borderRadius = '5px';
-
-                            // Append the image to the preview container
-                            imagePreview.appendChild(img);
-                        };
-                        reader.readAsDataURL(file); // Read the file as a data URL
-                    }
-                });
-            }
-        });
-    </script>
+    <script src="{{ asset('js/dashboard/forms/course/common.js') }}"></script>
 @endpush

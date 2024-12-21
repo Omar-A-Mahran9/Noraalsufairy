@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\StoreQuizRequest;
+use App\Models\Course;
 use App\Models\Quiz;
 use App\Models\Quizze;
+use App\Models\Section;
 use Illuminate\Http\Request;
 
 class QuizzeController extends Controller
@@ -20,9 +23,8 @@ class QuizzeController extends Controller
 
         if ($request->ajax())
         {
-            $data = getModelData(model: new Quiz());
-      
-             return response()->json($data);
+            $data = getModelData(model: new Quiz(),relations:[ 'course' => ['id','name_' .getLocale(),'description_' .getLocale()],'section' => ['id','name_' .getLocale(),'description_' .getLocale()]]);
+         return response()->json($data);
         }
 
         return view('dashboard.quizes.index');
@@ -35,7 +37,11 @@ class QuizzeController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create_quizzes');
+        $courses = Course::getApprovedCourses();  // Get approved courses based on global scope
+        $section        = Section::select('id','name_' . getLocale())->get();
+
+        return view('dashboard.quizes.create',compact('courses','section'));
     }
 
     /**
@@ -44,10 +50,13 @@ class QuizzeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreQuizRequest $request)
     {
-        //
-    }
+        $this->authorize('create_quizzes');
+        $data = $request->validated();
+    
+        $Quiz = Quiz::create($data);
+     }
 
     /**
      * Display the specified resource.

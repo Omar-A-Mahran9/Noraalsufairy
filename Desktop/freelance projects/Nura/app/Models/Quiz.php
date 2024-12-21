@@ -9,6 +9,7 @@ class Quiz extends Model
 {
     use HasFactory;
     protected $table = 'quizzes';
+    protected $guarded = [];
     protected $appends = ['name','description'];
     protected $casts   = [
         'created_at' => 'date:Y-m-d',
@@ -23,6 +24,14 @@ class Quiz extends Model
     public function getDescriptionAttribute()
     {
         return $this->attributes['description_' . getLocale()];
+    }
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
     }
 
 }

@@ -14,7 +14,7 @@
                 class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
 
                 <!-- begin :: Title -->
-                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">{{ __('books') }}</h1>
+                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">{{ __('quizzes') }}</h1>
                 <!-- end   :: Title -->
 
                 <!-- begin :: Separator -->
@@ -25,7 +25,7 @@
                 <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
                     <!-- begin :: Item -->
                     <li class="breadcrumb-item text-muted">
-                        {{ __('books list') }}
+                        {{ __('quizzes list') }}
                     </li>
                     <!-- end   :: Item -->
                 </ul>
@@ -60,20 +60,60 @@
                 <!-- end   :: General Search -->
 
                 <!-- begin :: Toolbar -->
-                <div class="d-flex justify-content-end" data-kt-docs-table-toolbar="base">
+                <div class="d-flex gap-5 justify-content-end" data-kt-docs-table-toolbar="base">
+
 
                     <!-- begin :: Add Button -->
-                    <a href="{{ route('dashboard.books.create') }}" class="btn btn-primary" data-bs-toggle="tooltip"
+                    <a href="{{ route('dashboard.quizzes.questions.create') }}" class="btn btn-primary"
+                        data-bs-toggle="tooltip" title="">
+
+                        <span class="svg-icon svg-icon-2">
+                            <i class="fa fa-plus fa-lg"></i>
+                        </span>
+
+                        {{ __('Add Choice Question') }}
+
+                    </a>
+                    <!-- end   :: Add Button -->
+
+                    <!-- begin :: Add Button -->
+                    <a href="{{ route('dashboard.quizzes.questions.create') }}" class="btn btn-primary"
+                        data-bs-toggle="tooltip" title="">
+
+                        <span class="svg-icon svg-icon-2">
+                            <i class="fa fa-plus fa-lg"></i>
+                        </span>
+
+                        {{ __('Add text Question') }}
+
+                    </a>
+                    <!-- end   :: Add Button -->
+                    <!-- begin :: Add Button -->
+                    <a href="{{ route('dashboard.quizzes.questions.create') }}" class="btn btn-primary"
+                        data-bs-toggle="tooltip" title="">
+
+                        <span class="svg-icon svg-icon-2">
+                            <i class="fa fa-plus fa-lg"></i>
+                        </span>
+
+                        {{ __('Add multiple Question') }}
+
+                    </a>
+                    <!-- end   :: Add Button -->
+
+                    <!-- begin :: Add Button -->
+                    <a href="{{ route('dashboard.quizzes.create') }}" class="btn btn-primary" data-bs-toggle="tooltip"
                         title="">
 
                         <span class="svg-icon svg-icon-2">
                             <i class="fa fa-plus fa-lg"></i>
                         </span>
 
-                        {{ __('Add new book') }}
+                        {{ __('Add new Quiz') }}
 
                     </a>
                     <!-- end   :: Add Button -->
+
 
                 </div>
                 <!-- end   :: Toolbar -->
@@ -89,9 +129,11 @@
                 <thead>
                     <tr class="text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th>#</th>
-                        <th>{{ __('image') }}</th>
                         <th>{{ __('name') }}</th>
-                        <th>{{ __('price') }}</th>
+                        <th>{{ __('duration (by minuts)') }}</th>
+                        <th>{{ __('Courses') }}</th>
+                        <th>{{ __('Sections') }}</th>
+
                         <th>{{ __('created date') }}</th>
                         <th class="min-w-100px">{{ __('actions') }}</th>
                     </tr>
@@ -112,7 +154,7 @@
 @endsection
 @push('scripts')
     <script src="{{ asset('js/dashboard/datatables/datatables.bundle.js') }}"></script>
-    <script src="{{ asset('js/dashboard/datatables/book.js') }}"></script>
+    <script src="{{ asset('js/dashboard/datatables/qiuz.js') }}"></script>
     <script>
         let currentUserId = {{ auth()->id() }};
     </script>
