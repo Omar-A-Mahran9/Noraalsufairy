@@ -45,6 +45,8 @@ Route::group([ 'prefix' => 'dashboard' , 'namespace' => 'Dashboard', 'as' => 'da
     });
     Route::resource('books', 'BookController');
     Route::resource('articles', 'ArticlesController');
+    Route::resource('quizzes','QuizzeController');
+
 
     Route::resource('orders','OrderController');
     Route::resource('roles','RoleController');

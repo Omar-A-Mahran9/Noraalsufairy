@@ -22,11 +22,12 @@ class CreateQueziesAnswersTable extends Migration
 
             $table->boolean('correct_answer')->default(false);
 
-            $table->unsignedBigInteger('quiez_id')->nullable();
-            $table->foreign('quiez_id')
+            $table->unsignedBigInteger('quiz_id')->nullable();
+            $table->foreign('quiz_id')
                 ->references('id')
                 ->on('quizzes')->onDelete('cascade');
 
+            
             $table->timestamps();
         });
     }

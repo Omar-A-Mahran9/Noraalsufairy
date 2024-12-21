@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Controller;
+use App\Models\Quiz;
 use App\Models\Quizze;
 use Illuminate\Http\Request;
 
@@ -12,9 +14,18 @@ class QuizzeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $this->authorize('view_quizzes');
+
+        if ($request->ajax())
+        {
+            $data = getModelData(model: new Quiz());
+      
+             return response()->json($data);
+        }
+
+        return view('dashboard.quizes.index');
     }
 
     /**

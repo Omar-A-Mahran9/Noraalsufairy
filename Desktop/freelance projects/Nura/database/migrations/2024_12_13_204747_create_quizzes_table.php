@@ -20,7 +20,7 @@ class CreateQuizzesTable extends Migration
             $table->text('description_ar')->nullable();
             $table->text('description_en')->nullable();
             $table->boolean('open')->default(false);
-            $table->time('duration');
+            $table->integer('duration');
             $table->date('from');
             $table->date('to');
             $table->unsignedBigInteger('course_id')->nullable();

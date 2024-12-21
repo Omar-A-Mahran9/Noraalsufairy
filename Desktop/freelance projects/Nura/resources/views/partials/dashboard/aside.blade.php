@@ -90,6 +90,19 @@
                     </div>
                 @endcan
 
+                @can(['view_quizzes'])
+                    <div class="menu-item">
+                        <a class="menu-link {{ isTabActive('quizzes') }}" href="{{ route('dashboard.quizzes.index') }}"
+                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
+                            data-bs-placement="right">
+                            <span class="menu-icon">
+                                <i class="fa fa-question"></i>
+                            </span>
+                            <span class="menu-title"> {{ __('Quizzes') }}</span>
+                        </a>
+                    </div>
+                @endcan
+
 
 
                 <!-- end   :: cars section -->

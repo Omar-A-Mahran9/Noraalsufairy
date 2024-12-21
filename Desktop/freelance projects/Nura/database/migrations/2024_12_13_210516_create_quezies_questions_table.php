@@ -19,6 +19,11 @@ class CreateQueziesQuestionsTable extends Migration
             $table->longText('name_en');
             $table->enum('type', ['text','single', 'multiple', 'true_false'])->default('single');
 
+            $table->unsignedBigInteger('quiz_id')->nullable();
+            $table->foreign('quiz_id')
+                ->references('id')
+                ->on('quizzes')->onDelete('cascade');
+
             
             $table->timestamps();
         });
@@ -31,6 +36,6 @@ class CreateQueziesQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('_quezies_questions');
+        Schema::dropIfExists('quezies_questions');
     }
 }

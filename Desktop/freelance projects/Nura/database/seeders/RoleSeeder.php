@@ -22,6 +22,7 @@ class RoleSeeder extends Seeder
             'employees',
             'vendors',
             'courses',
+            'quizzes',
             'videos_materials',
             'attachment_materials',
             'books', 
