@@ -10,8 +10,7 @@ use App\Http\Controllers\Controller;
  use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Site\LoginUserRequest;
 use App\Http\Requests\Site\StoreUserRequest;
-use App\Models\Favorite;
-use App\Models\OrderNotification;
+ 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule as ValidationRule;

@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
-use App\Models\CarModel;
 use App\Models\Course;
 use Illuminate\Http\Request;
 

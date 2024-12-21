@@ -2,8 +2,7 @@
 
 namespace App\Traits;
 
-use App\Models\Order;
-use App\Models\Doctor;
+ use App\Models\Doctor;
 use App\Models\Appointment;
 
 trait NotificationTrait

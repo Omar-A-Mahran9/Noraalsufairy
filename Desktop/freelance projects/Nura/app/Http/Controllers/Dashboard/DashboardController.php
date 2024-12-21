@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Car;
-use App\Models\Order;
-use Carbon\Carbon;
+ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -16,49 +15,50 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $carsMonthlyRate = $this->getMonthlyRate('cars');
-        $ordersMonthlyRate = $this->getMonthlyRate('orders');
-        // $clientsMonthlyRate = $this->getMonthlyRate('vendors');
+        // $carsMonthlyRate = $this->getMonthlyRate('cars');
+        // $ordersMonthlyRate = $this->getMonthlyRate('orders');
+        // // $clientsMonthlyRate = $this->getMonthlyRate('vendors');
 
-        $ordersTypesPercentage = Order::select('type')->get()->groupBy('type')->map(function ($orders) {
+        // $ordersTypesPercentage = Order::select('type')->get()->groupBy('type')->map(function ($orders) {
 
-            $type = $orders[0]['type'];
+        //     $type = $orders[0]['type'];
 
-            return
-            [
-                'label' => __(str_replace('_', ' ', $type)),
-                'data' => count($orders),
-                'color' => $this->getUniqueColor(),
-            ];
+        //     return
+        //     [
+        //         'label' => __(str_replace('_', ' ', $type)),
+        //         'data' => count($orders),
+        //         'color' => $this->getUniqueColor(),
+        //     ];
 
-        })->values()->toArray();
+        // })->values()->toArray();
 
-        $carBrandsPercentage = Car::select('brand_id')->get()->groupBy('brand_id')->map(function ($cars) {
+        // $carBrandsPercentage = Car::select('brand_id')->get()->groupBy('brand_id')->map(function ($cars) {
 
-            return
-                [
-                    'label' => $cars[0]['brand']['name'],
-                    'data' => count($cars),
-                    'color' => $this->getUniqueColor(),
-                ];
-        })->values();
+        //     return
+        //         [
+        //             'label' => $cars[0]['brand']['name'],
+        //             'data' => count($cars),
+        //             'color' => $this->getUniqueColor(),
+        //         ];
+        // })->values();
 
-        $carOrdersBrandsPercentage = Order::with('car:id,brand_id')->whereNotNull('car_id')->select('car_id')->get()->groupBy('car.brand_id')->map(function ($orders) {
+        // $carOrdersBrandsPercentage = Order::with('car:id,brand_id')->whereNotNull('car_id')->select('car_id')->get()->groupBy('car.brand_id')->map(function ($orders) {
 
-            return
-                [
-                    'label' => $orders[0]['car']['brand']['name'] ,
-                    'data' => count($orders),
-                    'color' => $this->getUniqueColor(),
-                ];
+        //     return
+        //         [
+        //             'label' => $orders[0]['car']['brand']['name'] ,
+        //             'data' => count($orders),
+        //             'color' => $this->getUniqueColor(),
+        //         ];
 
-        })->values();
+        // })->values();
 
 
-        if ( count($ordersTypesPercentage) > 1)
-            $this->swapArrayElements($ordersTypesPercentage , 0);
+        // if ( count($ordersTypesPercentage) > 1)
+        //     $this->swapArrayElements($ordersTypesPercentage , 0);
 
-        return view('dashboard.index', compact('carsMonthlyRate', 'ordersMonthlyRate', 'ordersTypesPercentage','carBrandsPercentage','carOrdersBrandsPercentage'));
+        // return view('dashboard.index', compact('carsMonthlyRate', 'ordersMonthlyRate', 'ordersTypesPercentage','carBrandsPercentage','carOrdersBrandsPercentage'));
+        return view('dashboard.index');
 
     }
 
