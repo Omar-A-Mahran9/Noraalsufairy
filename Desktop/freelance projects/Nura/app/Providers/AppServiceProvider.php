@@ -35,17 +35,17 @@ class AppServiceProvider extends ServiceProvider
         //     view()->share(['brands' => $brands]);
         // }
 
-        View::composer('partials.dashboard.header', function ($view) {
-            $unreadNotifications = Employee::first()->unreadNotifications();
-            $allNotifications = Employee::first()->notifications();
+        // View::composer('partials.dashboard.header', function ($view) {
+        //     $unreadNotifications = Employee::first()->unreadNotifications();
+        //     $allNotifications = Employee::first()->notifications();
 
-            $view->with(['unreadNotifications' => $unreadNotifications, "allNotifications" => $allNotifications]);
-        });
+        //     $view->with(['unreadNotifications' => $unreadNotifications, "allNotifications" => $allNotifications]);
+        // });
 
-        View::composer('partials.dashboard.aside', function ($view) {
-            $unreadNotifications = Employee::first()->unreadNotifications()->take(5)->get();
+        // View::composer('partials.dashboard.aside', function ($view) {
+        //     $unreadNotifications = Employee::first()->unreadNotifications()->take(5)->get();
 
-            $view->with(['unreadNotifications' => $unreadNotifications]);
-        });
+        //     $view->with(['unreadNotifications' => $unreadNotifications]);
+        // });
     }
 }

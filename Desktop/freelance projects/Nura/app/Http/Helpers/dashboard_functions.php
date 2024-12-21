@@ -363,45 +363,4 @@ if(!function_exists('removeFromFavourite')){
 
 }
 
-/**
- * push firebase notification .
- * Author : Khaled
- * created By Khaled @ 15-06-2021
- */
-if(!function_exists('pushNotification')) {
-    function storeAndPushNotification($titleAr, $titleEn, $descriptionAr, $descriptionEn, $icon, $color, $url)
-    {
-        /* add notification to first Employee */
-        $date = Carbon::now()->diffForHumans();
-        // $notification = new NewNotification($titleAr, $titleEn, $descriptionAr, $descriptionEn, $date, $icon, $color, $url);
-        $admin = Employee::first();
-        $admin->notify($notification);
-
-        /* push notifications to all admins */
-        $firebaseToken = Employee::whereNotNull('device_token')->pluck('device_token')->all();
-        $SERVER_API_KEY = "AAAAo9l6yTw:APA91bGNwk_P5TA_kKt6_KnDadQHyZUL-rwWTRMIDLB115Z-iYPTP2etHCFlmfHoky8D0RwXJyRGdzfz70xr7AwyWj2qNiGiqwKznK2H8qLDGve0kdxn3aFxRHxCoBVV4OgZz6TGIp5y";
-
-        $data = [
-            "registration_ids" => $firebaseToken,
-            "notification" => [
-                "alert_title" => app()->isLocale('ar') ? $titleAr : $titleEn,
-                "title_ar" => $titleAr,
-                "title_en" => $titleEn,
-                "description_ar" => $descriptionAr,
-                "description_en" => $descriptionEn,
-                "date" => $date,
-                "alert_icon" => $icon,
-                "icon" => asset('assets/dashboard/media/avatars/dorak.png'),
-                "icon_color" => $color,
-                "url" => $url,
-                "id" => $admin->notifications->last()->id,
-            ]
-        ];
-
-        return Http::withHeaders([
-            "Authorization" => "key=$SERVER_API_KEY",
-        ])->post('https://fcm.googleapis.com/fcm/send', $data);
-    }
-}
-
-/** favourite functions **/
+ 
